@@ -11,9 +11,9 @@ import androidx.core.content.getSystemService
  * Created by john.wick on 2025/6/30
  */
 @SuppressLint("PrivateApi")
-internal object PowerApi24 : IPower {
+internal object PowerApi25 : IPower {
 
-    private const val TAG = "PowerApi24"
+    private const val TAG = "PowerApi25"
 
     override fun goToSleep(context: Context): Boolean {
         val manager = context.getSystemService<PowerManager>() ?: return false

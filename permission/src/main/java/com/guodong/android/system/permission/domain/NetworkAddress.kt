@@ -7,12 +7,13 @@ import androidx.annotation.Keep
  */
 @Keep
 data class NetworkAddress(
-    val isDhcp: Boolean,
+    val isStatic: Boolean,
     val address: String,
-    val subnetMask: String,
+    val netmask: String,
     val gateway: String,
-    val primaryDNS: String,
-    val secondaryDNS: String
+    val dns1: String,
+    val dns2: String,
+    val mac: String,
 ) {
     companion object {
         internal val EMPTY = NetworkAddress(
@@ -22,6 +23,7 @@ data class NetworkAddress(
             "0.0.0.0",
             "0.0.0.0",
             "0.0.0.0",
+            "",
         )
     }
 }

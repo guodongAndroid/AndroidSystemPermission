@@ -4,8 +4,10 @@ import android.content.Context
 import android.graphics.Bitmap
 import androidx.annotation.IntRange
 import androidx.annotation.Keep
+import com.guodong.android.system.permission.annotation.EthernetState
 import com.guodong.android.system.permission.annotation.Orientation
 import com.guodong.android.system.permission.domain.NetworkAddress
+import kotlinx.coroutines.flow.Flow
 import java.util.concurrent.TimeUnit
 
 /**
@@ -33,16 +35,16 @@ interface ISystemPermission {
      */
     fun setEthernetStaticAddress(
         ipAddress: String,
-        subnetMask: String,
+        netmask: String,
         gateway: String,
-        primaryDNS: String,
-        secondaryDNS: String
+        dns1: String,
+        dns2: String,
     )
 
     /**
      * 开启以太网DHCP
      */
-    fun setEthernetDhcpAddress()
+    fun setEthernetDhcpAddress(): Flow<@EthernetState Int>
 
     /**
      * 获取以太网网络信息

@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit
 /**
  * Created by john.wick on 2025/5/27
  */
-internal object SntpClientApi24 : ISntpClient {
+internal object SntpClientApi25 : ISntpClient {
 
     private val client = SntpClient()
 

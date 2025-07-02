@@ -19,9 +19,9 @@ import kotlin.math.abs
 /**
  * Created by john.wick on 2025/6/30
  */
-internal object TakeScreenShotApi24 : ITakeScreenShot {
+internal object TakeScreenShotApi25 : ITakeScreenShot {
 
-    private const val TAG = "TakeScreenShotApi24"
+    private const val TAG = "TakeScreenShotApi25"
 
     override suspend fun takeScreenShot(context: Context, savePath: String): Boolean =
         withContext(Dispatchers.IO) {

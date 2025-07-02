@@ -19,9 +19,9 @@ import java.io.File
 /**
  * Created by john.wick on 2025/5/27
  */
-internal object PackageInstallerApi24 : IPackageInstaller {
+internal object PackageInstallerApi25 : IPackageInstaller {
 
-    private const val TAG = "PackageInstallerApi24"
+    private const val TAG = "PackageInstallerApi25"
 
     override fun installPackage(
         context: Context,

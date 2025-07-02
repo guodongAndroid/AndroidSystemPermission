@@ -19,9 +19,9 @@ import com.guodong.android.system.permission.util.getHomeActivities
 /**
  * Created by john.wick on 2025/4/15
  */
-internal object LauncherApi24 : ILauncher {
+internal object LauncherApi25 : ILauncher {
 
-    private const val TAG = "LauncherApi24"
+    private const val TAG = "LauncherApi25"
 
     override fun getLauncher(context: Context): ComponentName? {
         val resolveInfos = mutableListOf<ResolveInfo>()

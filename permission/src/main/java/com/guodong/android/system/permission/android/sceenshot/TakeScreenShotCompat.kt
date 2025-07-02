@@ -23,7 +23,7 @@ internal object TakeScreenShotCompat : ITakeScreenShot {
         }
 
         else -> {
-            TakeScreenShotApi24
+            TakeScreenShotApi25
         }
     }
 

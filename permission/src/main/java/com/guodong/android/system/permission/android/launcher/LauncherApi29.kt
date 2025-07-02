@@ -28,7 +28,7 @@ internal object LauncherApi29 : ILauncher {
     private const val TAG = "LauncherApi29"
 
     override fun getLauncher(context: Context): ComponentName? {
-        return LauncherApi24.getLauncher(context)
+        return LauncherApi25.getLauncher(context)
     }
 
     override fun setLauncher(context: Context, packageName: String): Boolean {

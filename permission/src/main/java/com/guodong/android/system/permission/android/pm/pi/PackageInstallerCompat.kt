@@ -20,7 +20,7 @@ internal object PackageInstallerCompat : IPackageInstaller {
         }
 
         else -> {
-            PackageInstallerApi24
+            PackageInstallerApi25
         }
     }
 

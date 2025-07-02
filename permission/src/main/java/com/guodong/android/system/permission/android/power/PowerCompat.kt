@@ -14,7 +14,7 @@ internal object PowerCompat : IPower {
         }
 
         else -> {
-            PowerApi24
+            PowerApi25
         }
     }
 

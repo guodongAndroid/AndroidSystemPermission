@@ -18,10 +18,12 @@ import com.guodong.android.system.permission.android.runtime.RuntimePermissionCo
 import com.guodong.android.system.permission.android.sceenshot.TakeScreenShotCompat
 import com.guodong.android.system.permission.android.screen.ScreenOffCompat
 import com.guodong.android.system.permission.android.sntp.SntpClientCompat
+import com.guodong.android.system.permission.annotation.EthernetState
 import com.guodong.android.system.permission.annotation.Orientation
 import com.guodong.android.system.permission.domain.NetworkAddress
 import com.guodong.android.system.permission.util.ShellUtil
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import java.util.Calendar
 import java.util.TimeZone
@@ -50,20 +52,20 @@ open class AndroidStandardSystemPermission : ISystemPermission {
 
     override fun setEthernetStaticAddress(
         ipAddress: String,
-        subnetMask: String,
+        netmask: String,
         gateway: String,
-        primaryDNS: String,
-        secondaryDNS: String
+        dns1: String,
+        dns2: String,
     ) {
-        TODO("setEthernetStaticAddress")
+        throw UnsupportedOperationException("AOSP not support Ethernet")
     }
 
-    override fun setEthernetDhcpAddress() {
-        TODO("setEthernetDhcpAddress")
+    override fun setEthernetDhcpAddress(): Flow<@EthernetState Int> {
+        throw UnsupportedOperationException("AOSP not support Ethernet")
     }
 
     override suspend fun getEthernetNetworkAddress(): NetworkAddress {
-        TODO("getEthernetNetworkAddress")
+        throw UnsupportedOperationException("AOSP not support Ethernet")
     }
 
     override fun reboot() {

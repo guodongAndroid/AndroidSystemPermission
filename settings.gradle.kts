@@ -23,3 +23,4 @@ rootProject.name = "AndroidSystemPermissionApp"
 include(":app")
 include(":permission")
 include(":framework")
+include(":permission-adapters:hikvision")

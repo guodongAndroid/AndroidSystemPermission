@@ -20,7 +20,7 @@ internal object SntpClientCompat : ISntpClient {
         }
 
         else -> {
-            SntpClientApi24
+            SntpClientApi25
         }
     }
 

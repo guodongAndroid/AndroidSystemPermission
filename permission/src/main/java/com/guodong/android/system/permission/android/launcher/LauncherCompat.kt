@@ -15,7 +15,7 @@ internal object LauncherCompat : ILauncher {
         }
 
         else -> {
-            LauncherApi24
+            LauncherApi25
         }
     }
 
