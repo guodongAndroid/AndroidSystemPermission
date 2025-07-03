@@ -3,12 +3,14 @@ package com.guodong.android.system.permission
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.os.Build
 import android.os.PowerManager
 import android.os.SystemClock
 import android.provider.Settings
 import android.util.Log
 import androidx.core.content.getSystemService
 import com.guodong.android.system.permission.android.adb.AdbCompat
+import com.guodong.android.system.permission.android.ethernet.EthernetCompat
 import com.guodong.android.system.permission.android.launcher.LauncherCompat
 import com.guodong.android.system.permission.android.ota.OTACompat
 import com.guodong.android.system.permission.android.pm.clear.ClearApplicationUserDataCompat
@@ -18,12 +20,10 @@ import com.guodong.android.system.permission.android.runtime.RuntimePermissionCo
 import com.guodong.android.system.permission.android.sceenshot.TakeScreenShotCompat
 import com.guodong.android.system.permission.android.screen.ScreenOffCompat
 import com.guodong.android.system.permission.android.sntp.SntpClientCompat
-import com.guodong.android.system.permission.annotation.EthernetState
 import com.guodong.android.system.permission.annotation.Orientation
 import com.guodong.android.system.permission.domain.NetworkAddress
 import com.guodong.android.system.permission.util.ShellUtil
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import java.util.Calendar
 import java.util.TimeZone
@@ -50,30 +50,36 @@ open class AndroidStandardSystemPermission : ISystemPermission {
         return BuildConfig.VERSION_NAME
     }
 
-    override fun setEthernetStaticAddress(
+    override suspend fun setEthernetStaticAddress(
         ipAddress: String,
         netmask: String,
         gateway: String,
         dns1: String,
         dns2: String,
-    ) {
-        throw UnsupportedOperationException("AOSP not support Ethernet")
+    ): Boolean {
+        return EthernetCompat.setStaticAddress(context, ipAddress, netmask, gateway, dns1, dns2)
     }
 
-    override fun setEthernetDhcpAddress(): Flow<@EthernetState Int> {
-        throw UnsupportedOperationException("AOSP not support Ethernet")
+    override suspend fun setEthernetDhcpAddress(): Boolean {
+        return EthernetCompat.setDhcpAddress(context)
     }
 
     override suspend fun getEthernetNetworkAddress(): NetworkAddress {
-        throw UnsupportedOperationException("AOSP not support Ethernet")
+        return EthernetCompat.getNetworkAddress(context)
     }
 
-    override fun reboot() {
-        try {
-            val manager = context.getSystemService<PowerManager>() ?: return
+    override suspend fun getEthernetMacAddress(): String {
+        return EthernetCompat.getMacAddress()
+    }
+
+    override fun reboot(): Boolean {
+        return try {
+            val manager = context.getSystemService<PowerManager>() ?: return false
             manager.reboot("")
+            true
         } catch (e: Exception) {
             Log.e(TAG, "reboot: ${e.message}", e)
+            false
         }
     }
 
@@ -192,15 +198,17 @@ open class AndroidStandardSystemPermission : ISystemPermission {
         return AdbCompat.isAdbEnabled(context)
     }
 
-    override fun hideSystemBar() {
+    override fun hideSystemBar(): Boolean {
         // AOSP not supported
+        return false
     }
 
-    override fun showSystemBar() {
+    override fun showSystemBar(): Boolean {
         // AOSP not supported
+        return false
     }
 
-    override fun setDate(year: Int, month: Int, day: Int) {
+    override suspend fun setDate(year: Int, month: Int, day: Int): Boolean {
         val calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+8")).apply {
             set(Calendar.YEAR, year)
             set(Calendar.MONTH, month - 1)
@@ -208,10 +216,10 @@ open class AndroidStandardSystemPermission : ISystemPermission {
         }
 
         val timeInMillis = calendar.timeInMillis
-        SystemClock.setCurrentTimeMillis(timeInMillis)
+        return SystemClock.setCurrentTimeMillis(timeInMillis)
     }
 
-    override fun setTime(hour: Int, minute: Int, second: Int) {
+    override suspend fun setTime(hour: Int, minute: Int, second: Int): Boolean {
         val calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+8")).apply {
             set(Calendar.HOUR_OF_DAY, hour)
             set(Calendar.MINUTE, minute)
@@ -219,7 +227,7 @@ open class AndroidStandardSystemPermission : ISystemPermission {
         }
 
         val timeInMillis = calendar.timeInMillis
-        SystemClock.setCurrentTimeMillis(timeInMillis)
+        return SystemClock.setCurrentTimeMillis(timeInMillis)
     }
 
     override fun setOrientation(angle: Int) {
@@ -258,6 +266,10 @@ open class AndroidStandardSystemPermission : ISystemPermission {
 
     override fun takeScreenShot(): Bitmap? {
         return TakeScreenShotCompat.takeScreenShot(context)
+    }
+
+    override suspend fun getFirmwareVersion(): String {
+        return Build.DISPLAY
     }
 
     override suspend fun getNtpTime(

@@ -47,6 +47,7 @@ dependencies {
 
     compileOnly(project(":framework"))
     api(project(":permission"))
+    implementation(project(":permission-aars:hikvision"))
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

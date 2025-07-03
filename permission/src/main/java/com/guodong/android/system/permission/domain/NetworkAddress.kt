@@ -7,23 +7,32 @@ import androidx.annotation.Keep
  */
 @Keep
 data class NetworkAddress(
-    val isStatic: Boolean,
+    val ipAssignment: Int,
     val address: String,
     val netmask: String,
     val gateway: String,
     val dns1: String,
     val dns2: String,
-    val mac: String,
 ) {
+    @Keep
     companion object {
-        internal val EMPTY = NetworkAddress(
-            false,
+        val UNASSIGNED = NetworkAddress(
+            IpAssignment.UNASSIGNED,
             "0.0.0.0",
             "0.0.0.0",
             "0.0.0.0",
             "0.0.0.0",
             "0.0.0.0",
-            "",
         )
+    }
+
+    @Keep
+    annotation class IpAssignment {
+        @Keep
+        companion object {
+            const val STATIC = 1
+            const val DHCP = 2
+            const val UNASSIGNED = 3
+        }
     }
 }

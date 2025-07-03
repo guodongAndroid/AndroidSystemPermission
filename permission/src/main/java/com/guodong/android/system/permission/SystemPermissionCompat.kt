@@ -3,10 +3,8 @@ package com.guodong.android.system.permission
 import android.content.Context
 import android.graphics.Bitmap
 import androidx.annotation.Keep
-import com.guodong.android.system.permission.annotation.EthernetState
 import com.guodong.android.system.permission.annotation.Orientation
 import com.guodong.android.system.permission.domain.NetworkAddress
-import kotlinx.coroutines.flow.Flow
 import java.util.concurrent.TimeUnit
 
 /**
@@ -29,17 +27,17 @@ object SystemPermissionCompat : ISystemPermission {
         return delegate.getVersion()
     }
 
-    override fun setEthernetStaticAddress(
+    override suspend fun setEthernetStaticAddress(
         ipAddress: String,
         netmask: String,
         gateway: String,
         dns1: String,
         dns2: String
-    ) {
-        delegate.setEthernetStaticAddress(ipAddress, netmask, gateway, dns1, dns2)
+    ): Boolean {
+        return delegate.setEthernetStaticAddress(ipAddress, netmask, gateway, dns1, dns2)
     }
 
-    override fun setEthernetDhcpAddress(): Flow<@EthernetState Int> {
+    override suspend fun setEthernetDhcpAddress(): Boolean {
         return delegate.setEthernetDhcpAddress()
     }
 
@@ -47,8 +45,12 @@ object SystemPermissionCompat : ISystemPermission {
         return delegate.getEthernetNetworkAddress()
     }
 
-    override fun reboot() {
-        delegate.reboot()
+    override suspend fun getEthernetMacAddress(): String {
+        return delegate.getEthernetMacAddress()
+    }
+
+    override fun reboot(): Boolean {
+        return delegate.reboot()
     }
 
     override fun factoryReset() {
@@ -115,20 +117,20 @@ object SystemPermissionCompat : ISystemPermission {
         return delegate.isAdbEnabled()
     }
 
-    override fun hideSystemBar() {
-        delegate.hideSystemBar()
+    override fun hideSystemBar(): Boolean {
+        return delegate.hideSystemBar()
     }
 
-    override fun showSystemBar() {
-        delegate.showSystemBar()
+    override fun showSystemBar(): Boolean {
+        return delegate.showSystemBar()
     }
 
-    override fun setDate(year: Int, month: Int, day: Int) {
-        delegate.setDate(year, month, day)
+    override suspend fun setDate(year: Int, month: Int, day: Int): Boolean {
+        return delegate.setDate(year, month, day)
     }
 
-    override fun setTime(hour: Int, minute: Int, second: Int) {
-        delegate.setTime(hour, minute, second)
+    override suspend fun setTime(hour: Int, minute: Int, second: Int): Boolean {
+        return delegate.setTime(hour, minute, second)
     }
 
     override fun setOrientation(@Orientation angle: Int) {
@@ -160,6 +162,10 @@ object SystemPermissionCompat : ISystemPermission {
 
     override fun takeScreenShot(): Bitmap? {
         return delegate.takeScreenShot()
+    }
+
+    override suspend fun getFirmwareVersion(): String {
+        return delegate.getFirmwareVersion()
     }
 
     override suspend fun getNtpTime(

@@ -4,10 +4,8 @@ import android.content.Context
 import android.graphics.Bitmap
 import androidx.annotation.IntRange
 import androidx.annotation.Keep
-import com.guodong.android.system.permission.annotation.EthernetState
 import com.guodong.android.system.permission.annotation.Orientation
 import com.guodong.android.system.permission.domain.NetworkAddress
-import kotlinx.coroutines.flow.Flow
 import java.util.concurrent.TimeUnit
 
 /**
@@ -33,28 +31,30 @@ interface ISystemPermission {
     /**
      * 设置以太网静态地址
      */
-    fun setEthernetStaticAddress(
+    suspend fun setEthernetStaticAddress(
         ipAddress: String,
         netmask: String,
         gateway: String,
         dns1: String,
         dns2: String,
-    )
+    ): Boolean
 
     /**
      * 开启以太网DHCP
      */
-    fun setEthernetDhcpAddress(): Flow<@EthernetState Int>
+    suspend fun setEthernetDhcpAddress(): Boolean
 
     /**
      * 获取以太网网络信息
      */
     suspend fun getEthernetNetworkAddress(): NetworkAddress
 
+    suspend fun getEthernetMacAddress(): String
+
     /**
      * 重启设备
      */
-    fun reboot()
+    fun reboot(): Boolean
 
     /**
      * 恢复出厂设置
@@ -140,22 +140,22 @@ interface ISystemPermission {
     /**
      * 隐藏状态栏和导航栏
      */
-    fun hideSystemBar()
+    fun hideSystemBar(): Boolean
 
     /**
      * 显示状态栏和导航栏
      */
-    fun showSystemBar()
+    fun showSystemBar(): Boolean
 
     /**
      * 设置系统日期
      */
-    fun setDate(year: Int, month: Int, day: Int)
+    suspend fun setDate(year: Int, month: Int, day: Int): Boolean
 
     /**
      * 设置系统时间
      */
-    fun setTime(hour: Int, minute: Int, second: Int)
+    suspend fun setTime(hour: Int, minute: Int, second: Int): Boolean
 
     /**
      * 设置屏幕旋转方向，顺时针旋转
@@ -191,6 +191,11 @@ interface ISystemPermission {
      * 屏幕截图
      */
     fun takeScreenShot(): Bitmap?
+
+    /**
+     * 获取固件版本
+     */
+    suspend fun getFirmwareVersion(): String
 
     /**
      * 获取NTP服务器时间
