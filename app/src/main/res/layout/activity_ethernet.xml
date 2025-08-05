@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_vertical_0.5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <TextView
+            android:id="@+id/tv_ethernet_mode_label"
+            style="@style/EthernetTextLabelStyle"
+            android:text="@string/ethernet_mode"
+            app:layout_constraintBottom_toBottomOf="@id/tv_ethernet_mode"
+            app:layout_constraintEnd_toStartOf="@id/gl_vertical_0.5"
+            app:layout_constraintTop_toTopOf="@id/tv_ethernet_mode" />
+
+        <TextView
+            android:id="@+id/tv_ethernet_mode"
+            style="@style/EthernetTextInputLayoutStyle"
+            app:layout_constraintBottom_toTopOf="@id/layout_ethernet_ip"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/gl_vertical_0.5"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_ethernet_ip_label"
+            style="@style/EthernetTextLabelStyle"
+            android:text="@string/ethernet_ip"
+            app:layout_constraintBottom_toBottomOf="@id/layout_ethernet_ip"
+            app:layout_constraintEnd_toStartOf="@id/gl_vertical_0.5"
+            app:layout_constraintTop_toTopOf="@id/layout_ethernet_ip" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout_ethernet_ip"
+            style="@style/EthernetTextInputLayoutStyle"
+            android:hint="@string/ethernet_ip_hint"
+            app:layout_constraintBottom_toTopOf="@id/layout_ethernet_netmask"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/gl_vertical_0.5"
+            app:layout_constraintTop_toBottomOf="@id/tv_ethernet_mode">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_ethernet_ip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/tv_ethernet_netmask_label"
+            style="@style/EthernetTextLabelStyle"
+            android:text="@string/ethernet_netmask"
+            app:layout_constraintBottom_toBottomOf="@id/layout_ethernet_netmask"
+            app:layout_constraintEnd_toStartOf="@id/gl_vertical_0.5"
+            app:layout_constraintTop_toTopOf="@id/layout_ethernet_netmask" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout_ethernet_netmask"
+            style="@style/EthernetTextInputLayoutStyle"
+            android:hint="@string/ethernet_netmask_hint"
+            app:layout_constraintBottom_toTopOf="@id/layout_ethernet_gateway"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/gl_vertical_0.5"
+            app:layout_constraintTop_toBottomOf="@id/layout_ethernet_ip">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_ethernet_netmask"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/tv_ethernet_gateway_label"
+            style="@style/EthernetTextLabelStyle"
+            android:text="@string/ethernet_gateway"
+            app:layout_constraintBottom_toBottomOf="@id/layout_ethernet_gateway"
+            app:layout_constraintEnd_toStartOf="@id/gl_vertical_0.5"
+            app:layout_constraintTop_toTopOf="@id/layout_ethernet_gateway" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout_ethernet_gateway"
+            style="@style/EthernetTextInputLayoutStyle"
+            android:hint="@string/ethernet_gateway_hint"
+            app:layout_constraintBottom_toTopOf="@id/layout_ethernet_dns1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/gl_vertical_0.5"
+            app:layout_constraintTop_toBottomOf="@id/layout_ethernet_netmask">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_ethernet_gateway"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/tv_ethernet_dns1_label"
+            style="@style/EthernetTextLabelStyle"
+            android:text="@string/ethernet_dns1"
+            app:layout_constraintBottom_toBottomOf="@id/layout_ethernet_dns1"
+            app:layout_constraintEnd_toStartOf="@id/gl_vertical_0.5"
+            app:layout_constraintTop_toTopOf="@id/layout_ethernet_dns1" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout_ethernet_dns1"
+            style="@style/EthernetTextInputLayoutStyle"
+            android:hint="@string/ethernet_dns1_hint"
+            app:layout_constraintBottom_toTopOf="@id/layout_ethernet_dns2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/gl_vertical_0.5"
+            app:layout_constraintTop_toBottomOf="@id/layout_ethernet_gateway">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_ethernet_dns1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/tv_ethernet_dns2_label"
+            style="@style/EthernetTextLabelStyle"
+            android:text="@string/ethernet_dns2"
+            app:layout_constraintBottom_toBottomOf="@id/layout_ethernet_dns2"
+            app:layout_constraintEnd_toStartOf="@id/gl_vertical_0.5"
+            app:layout_constraintTop_toTopOf="@id/layout_ethernet_dns2" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout_ethernet_dns2"
+            style="@style/EthernetTextInputLayoutStyle"
+            android:hint="@string/ethernet_dns2_hint"
+            app:layout_constraintBottom_toTopOf="@id/tv_ethernet_mac"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/gl_vertical_0.5"
+            app:layout_constraintTop_toBottomOf="@id/layout_ethernet_dns1">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_ethernet_dns2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/tv_ethernet_mac_label"
+            style="@style/EthernetTextLabelStyle"
+            android:text="@string/ethernet_mac"
+            app:layout_constraintBottom_toBottomOf="@id/tv_ethernet_mac"
+            app:layout_constraintEnd_toStartOf="@id/gl_vertical_0.5"
+            app:layout_constraintTop_toTopOf="@id/tv_ethernet_mac" />
+
+        <TextView
+            android:id="@+id/tv_ethernet_mac"
+            style="@style/EthernetTextInputLayoutStyle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/gl_vertical_0.5"
+            app:layout_constraintTop_toBottomOf="@id/layout_ethernet_dns2" />
+
+        <Button
+            android:id="@+id/btn_get_ethernet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:text="@string/ethernet_get"
+            app:layout_constraintEnd_toStartOf="@id/btn_set_static"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_ethernet_mac_label" />
+
+        <Button
+            android:id="@+id/btn_set_static"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ethernet_set_static"
+            app:layout_constraintEnd_toStartOf="@id/btn_set_dhcp"
+            app:layout_constraintStart_toEndOf="@id/btn_get_ethernet"
+            app:layout_constraintTop_toTopOf="@id/btn_get_ethernet" />
+
+        <Button
+            android:id="@+id/btn_set_dhcp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ethernet_set_dhcp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_set_static"
+            app:layout_constraintTop_toTopOf="@id/btn_get_ethernet" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

@@ -1,36 +1,29 @@
 package com.guodong.android.system.permission.app
 
-import android.os.Bundle
 import android.view.LayoutInflater
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import com.guodong.android.system.permission.SystemPermissionCompat
+import com.guodong.android.system.permission.app.activities.EthernetActivity
 import com.guodong.android.system.permission.app.databinding.ActivityMainBinding
+import kotlinx.coroutines.launch
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity<ActivityMainBinding>() {
 
-    private lateinit var binding: ActivityMainBinding
+    override fun getViewBinding(): ActivityMainBinding {
+        return ActivityMainBinding.inflate(LayoutInflater.from(this))
+    }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun initViews() {
+        binding.tvAppVersion.text = versionName
 
-        binding = ActivityMainBinding.inflate(LayoutInflater.from(this))
+        binding.tvSdkVersion.text =
+            getString(R.string.sdk_version, SystemPermissionCompat.getVersion())
 
-        enableEdgeToEdge()
-        setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+        lifecycleScope.launch {
+            binding.tvFirmwareVersion.text =
+                getString(R.string.firmware_version, SystemPermissionCompat.getFirmwareVersion())
         }
 
-        binding.take.setOnClickListener {
-            val bitmap = SystemPermissionCompat.takeScreenShot()
-            if (bitmap != null) {
-                binding.screenshot.setImageBitmap(bitmap)
-            }
-        }
+        binding.btnEthernet.setOnClickListener { EthernetActivity.start(this) }
     }
 }

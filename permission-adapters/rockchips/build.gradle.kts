@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.guodong.android.system.permission.framework"
+    namespace = "com.guodong.android.system.permission.adapter.rockchips"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
@@ -28,7 +28,6 @@ android {
 
     buildFeatures {
         buildConfig = true
-        aidl = true
     }
 
     compileOptions {
@@ -42,5 +41,10 @@ android {
 }
 
 dependencies {
-    compileOnly(libs.androidx.annotation)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.kotlin.coroutines.core)
+    implementation(libs.kotlin.coroutines.android)
+
+    compileOnly(project(":framework"))
+    api(project(":permission"))
 }

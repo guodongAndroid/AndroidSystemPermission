@@ -1,0 +1,196 @@
+package com.guodong.android.system.permission.app.activities
+
+import android.content.Context
+import android.content.Intent
+import android.view.LayoutInflater
+import android.widget.Toast
+import androidx.core.widget.doAfterTextChanged
+import androidx.lifecycle.lifecycleScope
+import com.guodong.android.system.permission.SystemPermissionCompat
+import com.guodong.android.system.permission.android.util.isNetMask
+import com.guodong.android.system.permission.app.BaseActivity
+import com.guodong.android.system.permission.app.R
+import com.guodong.android.system.permission.app.databinding.ActivityEthernetBinding
+import com.guodong.android.system.permission.app.isErrorState
+import com.guodong.android.system.permission.app.isGateway
+import com.guodong.android.system.permission.app.isIP
+import com.guodong.android.system.permission.domain.NetworkAddress
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+
+/**
+ * Created by john.wick on 2025/8/5
+ */
+class EthernetActivity : BaseActivity<ActivityEthernetBinding>() {
+
+    companion object {
+        fun start(context: Context) {
+            context.startActivity(Intent(context, EthernetActivity::class.java))
+        }
+    }
+
+    override fun getViewBinding(): ActivityEthernetBinding {
+        return ActivityEthernetBinding.inflate(LayoutInflater.from(this))
+    }
+
+    override fun initViews() {
+        initTextChanageListener()
+
+        lifecycleScope.launch { refreshEthernet() }
+
+        binding.btnGetEthernet.setOnClickListener {
+            lifecycleScope.launch { refreshEthernet() }
+        }
+
+        binding.btnSetStatic.setOnClickListener {
+            val ip = binding.etEthernetIp.text.toString()
+            val netmask = binding.etEthernetNetmask.text.toString()
+            val gateway = binding.etEthernetGateway.text.toString()
+            val dns1 = binding.etEthernetDns1.text.toString()
+            val dns2 = binding.etEthernetDns2.text.toString()
+
+            if (binding.layoutEthernetIp.isErrorState()) {
+                return@setOnClickListener
+            }
+
+            if (binding.layoutEthernetNetmask.isErrorState()) {
+                return@setOnClickListener
+            }
+
+            if (binding.layoutEthernetGateway.isErrorState()) {
+                return@setOnClickListener
+            }
+
+            if (binding.layoutEthernetDns1.isErrorState()) {
+                return@setOnClickListener
+            }
+
+            if (binding.layoutEthernetDns2.isErrorState()) {
+                return@setOnClickListener
+            }
+
+            lifecycleScope.launch {
+                val result = SystemPermissionCompat.setEthernetStaticAddress(
+                    ip,
+                    netmask,
+                    gateway,
+                    dns1,
+                    dns2
+                )
+                Toast.makeText(this@EthernetActivity, "设置静态地址: $result", Toast.LENGTH_SHORT)
+                    .show()
+
+                delay(1_000)
+
+                refreshEthernet()
+            }
+        }
+
+        binding.btnSetDhcp.setOnClickListener {
+            lifecycleScope.launch {
+                val result = SystemPermissionCompat.setEthernetDhcpAddress()
+                Toast.makeText(this@EthernetActivity, "设置DHCP: $result", Toast.LENGTH_SHORT)
+                    .show()
+
+                delay(5_000)
+                refreshEthernet()
+            }
+        }
+    }
+
+    private fun initTextChanageListener() {
+        binding.etEthernetIp.doAfterTextChanged {
+            val error = if (it.isNullOrEmpty() || !it.isIP()) {
+                getString(R.string.ethernet_ip_error)
+            } else {
+                null
+            }
+
+            binding.layoutEthernetIp.error = error
+        }
+
+        binding.etEthernetNetmask.doAfterTextChanged {
+            val error = if (it.isNullOrEmpty() || !it.isNetMask()) {
+                getString(R.string.ethernet_netmask_error)
+            } else {
+                null
+            }
+
+            binding.layoutEthernetNetmask.error = error
+        }
+
+        binding.etEthernetGateway.doAfterTextChanged {
+            val ip = binding.etEthernetIp.text.toString()
+            val netmask = binding.etEthernetNetmask.text.toString()
+            val error = if (it.isNullOrEmpty() || !it.isGateway(ip, netmask)) {
+                getString(R.string.ethernet_gateway_error)
+            } else {
+                null
+            }
+
+            binding.layoutEthernetGateway.error = error
+        }
+
+        binding.etEthernetDns1.doAfterTextChanged {
+            val error = if (it.isNullOrEmpty() || !it.isIP()) {
+                getString(R.string.ethernet_dns1_error)
+            } else {
+                null
+            }
+
+            binding.layoutEthernetDns1.error = error
+        }
+
+        binding.etEthernetDns2.doAfterTextChanged {
+            val error = if (it.isNullOrEmpty() || !it.isIP()) {
+                getString(R.string.ethernet_dns2_error)
+            } else {
+                null
+            }
+
+            binding.layoutEthernetDns2.error = error
+        }
+    }
+
+    private suspend fun refreshEthernet() {
+        val address = getEthernet()
+        val mode = when (address.ipAssignment) {
+            NetworkAddress.IpAssignment.STATIC -> {
+                enabledEditText(true)
+                getString(R.string.ethernet_mode_static)
+            }
+
+            NetworkAddress.IpAssignment.DHCP -> {
+                enabledEditText(false)
+                getString(R.string.ethernet_mode_dhcp)
+            }
+
+            else -> {
+                enabledEditText(true)
+                getString(R.string.ethernet_mode_unassigned)
+            }
+        }
+
+        binding.tvEthernetMode.text = mode
+
+        binding.etEthernetIp.setText(address.address)
+        binding.etEthernetNetmask.setText(address.netmask)
+        binding.etEthernetGateway.setText(address.gateway)
+        binding.etEthernetDns1.setText(address.dns1)
+        binding.etEthernetDns2.setText(address.dns2)
+
+        binding.tvEthernetMac.text = SystemPermissionCompat.getEthernetMacAddress()
+    }
+
+    private fun enabledEditText(enable: Boolean) {
+        binding.etEthernetIp.isEnabled = enable
+        binding.etEthernetNetmask.isEnabled = enable
+        binding.etEthernetGateway.isEnabled = enable
+        binding.etEthernetDns1.isEnabled = enable
+        binding.etEthernetDns2.isEnabled = enable
+    }
+
+    private suspend fun getEthernet(): NetworkAddress {
+        return SystemPermissionCompat.getEthernetNetworkAddress()
+    }
+}

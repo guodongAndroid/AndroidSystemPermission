@@ -21,14 +21,14 @@ android {
 
     signingConfigs {
         getByName("debug") {
-            storeFile = project.file("rockchip.jks")
+            storeFile = project.file("rockchips.jks")
             storePassword = "123456"
             keyAlias = "code"
             keyPassword = "123456"
         }
 
         create("release") {
-            storeFile = project.file("rockchip.jks")
+            storeFile = project.file("rockchips.jks")
             storePassword = "123456"
             keyAlias = "code"
             keyPassword = "123456"
@@ -48,6 +48,44 @@ android {
     buildFeatures {
         viewBinding = true
         buildConfig = true
+    }
+
+    flavorDimensions += listOf("vendor")
+    productFlavors {
+        create("aosp") {
+            applicationIdSuffix = ".aosp"
+            versionNameSuffix = "-aosp"
+            dimension = "vendor"
+            resValue("string", "app_name", "AndroidSystemPermissionApp-aosp")
+        }
+
+        create("rockchips") {
+            applicationIdSuffix = ".rockchips"
+            versionNameSuffix = "-rockchips"
+            dimension = "vendor"
+            resValue("string", "app_name", "AndroidSystemPermissionApp-rockchips")
+        }
+
+        create("hikvision") {
+            applicationIdSuffix = ".hikvision"
+            versionNameSuffix = "-hikvision"
+            dimension = "vendor"
+            resValue("string", "app_name", "AndroidSystemPermissionApp-hikvision")
+        }
+    }
+
+    sourceSets {
+        getByName("aosp") {
+            java.srcDirs("src/aosp/java")
+        }
+
+        getByName("rockchips") {
+            java.srcDirs("src/rockchips/java")
+        }
+
+        getByName("hikvision") {
+            java.srcDirs("src/hikvision/java")
+        }
     }
 
     compileOptions {
@@ -75,7 +113,9 @@ dependencies {
     implementation(libs.kotlin.coroutines.core)
     implementation(libs.kotlin.coroutines.android)
 
-    implementation(project(":permission"))
+    add("aospImplementation", project(":permission"))
+    add("rockchipsImplementation", project(":permission-adapters:rockchips"))
+    add("hikvisionImplementation", project(":permission-adapters:hikvision"))
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

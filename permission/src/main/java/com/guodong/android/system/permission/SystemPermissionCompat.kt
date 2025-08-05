@@ -1,5 +1,6 @@
 package com.guodong.android.system.permission
 
+import android.app.Application
 import android.content.Context
 import android.graphics.Bitmap
 import androidx.annotation.Keep
@@ -14,6 +15,15 @@ import java.util.concurrent.TimeUnit
 object SystemPermissionCompat : ISystemPermission {
 
     private lateinit var delegate: ISystemPermission
+
+    @JvmStatic
+    fun currentPackageName(): String? = ISystemPermission.currentPackageName()
+
+    @JvmStatic
+    fun currentProcessName(): String? = ISystemPermission.currentProcessName()
+
+    @JvmStatic
+    fun currentApplication(): Application? = ISystemPermission.currentApplication()
 
     fun setDelegate(delegate: ISystemPermission) {
         this.delegate = delegate

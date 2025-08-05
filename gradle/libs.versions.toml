@@ -4,6 +4,12 @@ kotlin = "2.0.21"
 kotlinCoroutines = "1.10.1"
 coreKtx = "1.15.0"
 
+compileSdk = "35"
+minSdk = "25"
+targetSdk = "35"
+versionCode = "1"
+versionName = "1.0.0"
+
 junit = "4.13.2"
 junitVersion = "1.1.5"
 espressoCore = "3.5.1"
@@ -18,11 +24,8 @@ recyclerview = "1.4.0"
 viewpager2 = "1.1.0"
 annotation = "1.9.1"
 
-compileSdk = "35"
-minSdk = "25"
-targetSdk = "35"
-versionCode = "1"
-versionName = "1.0.0"
+gson = "2.11.0"
+xstream = "1.4.21"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -45,6 +48,9 @@ androidx-annotation = { module = "androidx.annotation:annotation", version.ref =
 kotlin-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinCoroutines" }
 kotlin-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinCoroutines" }
 kotlin-coroutines-core-jvm = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core-jvm", version.ref = "kotlinCoroutines" }
+
+gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
+xstream = { module = "com.thoughtworks.xstream:xstream", version.ref = "xstream" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

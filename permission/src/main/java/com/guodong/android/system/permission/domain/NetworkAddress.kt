@@ -7,7 +7,7 @@ import androidx.annotation.Keep
  */
 @Keep
 data class NetworkAddress(
-    val ipAssignment: Int,
+    @IpAssignment val ipAssignment: Int,
     val address: String,
     val netmask: String,
     val gateway: String,

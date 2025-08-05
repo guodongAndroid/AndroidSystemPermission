@@ -6,12 +6,14 @@ import android.os.Build
 import android.os.SystemProperties
 import android.provider.Settings
 import android.util.Log
-import com.guodong.android.system.permission.AndroidStandardSystemPermission
+import androidx.annotation.Keep
+import com.guodong.android.system.permission.adapter.rockchips.RockChipsSystemPermission
 import com.guodong.android.system.permission.domain.NetworkAddress
 import com.hik.vis.module_base.IHikCallback
 import com.hik.vis.module_base.beans.ResponseStatus
 import com.hik.vis.module_base.constant.FactoryResetMode
 import com.hik.vis.module_sdk.IHikManager
+import com.hik.vis.module_sdk.constant.IHikConfig
 import com.hik.vis.module_system.beans.response.DeviceInfo
 import com.hik.vis.module_system.beans.response.IpAddress
 import com.hik.vis.module_system.constant.AddressType
@@ -23,8 +25,10 @@ import kotlin.coroutines.suspendCoroutine
 /**
  * Created by john.wick on 2025/7/2
  */
-class HikvisionSystemPermission : AndroidStandardSystemPermission() {
+@Keep
+class HikvisionSystemPermission : RockChipsSystemPermission() {
 
+    @Suppress("SpellCheckingInspection")
     companion object {
         private const val TAG = "HikvisionSystemPermission"
 
@@ -39,11 +43,16 @@ class HikvisionSystemPermission : AndroidStandardSystemPermission() {
         private const val EMPTY_CHAR_SEQUENCE = ""
     }
 
-    private val system: ISystemManager = IHikManager.getSystemManager()
+    private lateinit var system: ISystemManager
 
     override fun setContext(context: Context) {
         super.setContext(context)
         SystemProperties.set(KEY_LOG_LEVEL, LogLevel.DEBUG)
+
+        val config = IHikConfig.createConfig(context.applicationContext)
+            .setClientName(TAG)
+        IHikManager.init(config)
+        system = IHikManager.getSystemManager()
     }
 
     override suspend fun setEthernetStaticAddress(
@@ -95,7 +104,8 @@ class HikvisionSystemPermission : AndroidStandardSystemPermission() {
                     AddressType.DYNAMIC.value -> NetworkAddress.IpAssignment.DHCP
                     else -> NetworkAddress.IpAssignment.UNASSIGNED
                 }
-                NetworkAddress(
+
+                val address = NetworkAddress(
                     ipAssignment,
                     data.ipAddress,
                     data.subnetMask,
@@ -103,6 +113,8 @@ class HikvisionSystemPermission : AndroidStandardSystemPermission() {
                     data.primaryDns.ipAddress,
                     data.secondaryDns.ipAddress
                 )
+
+                cont.resume(address)
             }
 
             override fun onFailure(responseStatus: ResponseStatus) {
@@ -186,33 +198,35 @@ class HikvisionSystemPermission : AndroidStandardSystemPermission() {
         return true
     }
 
-    override suspend fun setDate(year: Int, month: Int, day: Int): Boolean = suspendCoroutine { cont ->
-        system.setDeviceDate(year, month + 1, day, object : IHikCallback<String>() {
-            override fun onSuccess(data: String?) {
-                Log.d(TAG, "setDate onSuccess: $data")
-                cont.resume(data != null)
-            }
+    override suspend fun setDate(year: Int, month: Int, day: Int): Boolean =
+        suspendCoroutine { cont ->
+            system.setDeviceDate(year, month + 1, day, object : IHikCallback<String>() {
+                override fun onSuccess(data: String?) {
+                    Log.d(TAG, "setDate onSuccess: $data")
+                    cont.resume(data != null)
+                }
 
-            override fun onFailure(responseStatus: ResponseStatus?) {
-                Log.e(TAG, "setDate onFailure: $responseStatus")
-                cont.resume(false)
-            }
-        })
-    }
+                override fun onFailure(responseStatus: ResponseStatus?) {
+                    Log.e(TAG, "setDate onFailure: $responseStatus")
+                    cont.resume(false)
+                }
+            })
+        }
 
-    override suspend fun setTime(hour: Int, minute: Int, second: Int): Boolean = suspendCoroutine { cont ->
-        system.setDeviceTime(hour, minute, second, object : IHikCallback<String>() {
-            override fun onSuccess(data: String?) {
-                Log.d(TAG, "setTime onSuccess: $data")
-                cont.resume(data != null)
-            }
+    override suspend fun setTime(hour: Int, minute: Int, second: Int): Boolean =
+        suspendCoroutine { cont ->
+            system.setDeviceTime(hour, minute, second, object : IHikCallback<String>() {
+                override fun onSuccess(data: String?) {
+                    Log.d(TAG, "setTime onSuccess: $data")
+                    cont.resume(data != null)
+                }
 
-            override fun onFailure(responseStatus: ResponseStatus?) {
-                Log.e(TAG, "setTime onFailure: $responseStatus")
-                cont.resume(false)
-            }
-        })
-    }
+                override fun onFailure(responseStatus: ResponseStatus?) {
+                    Log.e(TAG, "setTime onFailure: $responseStatus")
+                    cont.resume(false)
+                }
+            })
+        }
 
     override suspend fun getFirmwareVersion(): String = suspendCoroutine { cont ->
         system.getDeviceInfo(object : IHikCallback<DeviceInfo>() {

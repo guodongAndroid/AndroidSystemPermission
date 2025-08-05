@@ -46,10 +46,11 @@ dependencies {
     implementation(libs.kotlin.coroutines.android)
 
     compileOnly(project(":framework"))
-    api(project(":permission"))
-    implementation(project(":permission-aars:hikvision"))
+    api(project(":permission-adapters:rockchips"))
 
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    implementation(project(":permission-aars:hikvision"))
+    implementation(libs.gson)
+    implementation(libs.xstream) {
+        exclude(group = "xmlpull", module = "xmlpull")
+    }
 }

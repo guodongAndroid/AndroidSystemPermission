@@ -1,9 +1,12 @@
 package com.guodong.android.system.permission
 
+import android.app.ActivityThread
+import android.app.Application
 import android.content.Context
 import android.graphics.Bitmap
 import androidx.annotation.IntRange
 import androidx.annotation.Keep
+import androidx.annotation.RestrictTo
 import com.guodong.android.system.permission.annotation.Orientation
 import com.guodong.android.system.permission.domain.NetworkAddress
 import java.util.concurrent.TimeUnit
@@ -12,10 +15,13 @@ import java.util.concurrent.TimeUnit
  * Created by john.wick on 2025/5/27
  */
 @Keep
+@RestrictTo(RestrictTo.Scope.LIBRARY_GROUP_PREFIX)
 interface ISystemPermission {
 
     companion object {
-        private const val TAG = "ISystemPermission"
+        internal fun currentPackageName(): String? = ActivityThread.currentPackageName()
+        internal fun currentProcessName(): String? = ActivityThread.currentProcessName()
+        internal fun currentApplication(): Application? = ActivityThread.currentApplication()
     }
 
     /**

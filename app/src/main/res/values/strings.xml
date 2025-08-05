@@ -1,3 +1,40 @@
-<resources>
-    <string name="app_name">AndroidSystemPermissionApp</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_version">App版本：%s</string>
+    <string name="sdk_version">SDK版本：%s</string>
+    <string name="firmware_version">固件版本：%s</string>
+    <string name="ethernet">Ethernet</string>
+    <string name="device">Device</string>
+    <string name="runtime_permission">RuntimePermission</string>
+    <string name="launcher">Launcher&amp;Settings</string>
+    <string name="screen_bright">ScreenBright</string>
+    <string name="adb">Adb</string>
+    <string name="system_bar">SystemBar</string>
+    <string name="system_time">SystemTime</string>
+    <string name="screen_orientation">ScreenOrientation</string>
+    <string name="package_manager">PackageManager</string>
+    <string name="screen_shot">ScreenShot</string>
+
+    <string name="ethernet_mode">IP分配模式：</string>
+    <string name="ethernet_mode_static">STATIC</string>
+    <string name="ethernet_mode_dhcp">DHCP</string>
+    <string name="ethernet_mode_unassigned">UNASSIGNED</string>
+    <string name="ethernet_ip">IP地址：</string>
+    <string name="ethernet_ip_hint">请输入IP地址</string>
+    <string name="ethernet_ip_error">非法的IP地址</string>
+    <string name="ethernet_netmask">子网掩码：</string>
+    <string name="ethernet_netmask_hint">请输入子网掩码</string>
+    <string name="ethernet_netmask_error">非法的子网掩码</string>
+    <string name="ethernet_gateway">网关：</string>
+    <string name="ethernet_gateway_hint">请输入网关</string>
+    <string name="ethernet_gateway_error">非法的网关</string>
+    <string name="ethernet_dns1" tools:ignore="Typos">DNS1：</string>
+    <string name="ethernet_dns1_hint" tools:ignore="Typos">请输入DNS1</string>
+    <string name="ethernet_dns1_error" tools:ignore="Typos">非法的DNS1</string>
+    <string name="ethernet_dns2">DNS2：</string>
+    <string name="ethernet_dns2_hint">请输入DNS2</string>
+    <string name="ethernet_dns2_error">非法的DNS2</string>
+    <string name="ethernet_mac">MAC地址：</string>
+    <string name="ethernet_get">获取以太网信息</string>
+    <string name="ethernet_set_static">设置静态地址</string>
+    <string name="ethernet_set_dhcp">设置DHCP</string>
 </resources>

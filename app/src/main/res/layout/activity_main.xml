@@ -2,29 +2,116 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     tools:context=".MainActivity">
 
-    <ImageView
-        android:id="@+id/screenshot"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/take"
+    <TextView
+        android:id="@+id/tv_app_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ContentDescription" />
+        tools:text="@string/app_version" />
 
-    <Button
-        android:id="@+id/take"
+    <TextView
+        android:id="@+id/tv_sdk_version"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Take Screenshot"
-        android:layout_marginBottom="10dp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_app_version"
+        tools:text="@string/sdk_version" />
+
+    <TextView
+        android:id="@+id/tv_firmware_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_sdk_version"
+        tools:text="@string/firmware_version" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_firmware_version">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btn_ethernet"
+                style="@style/PermissionItemBtnStyle"
+                android:text="@string/ethernet" />
+
+            <Button
+                android:id="@+id/btn_device"
+                style="@style/PermissionItemBtnStyle"
+                android:text="@string/device" />
+
+            <Button
+                android:id="@+id/btn_runtime_permission"
+                style="@style/PermissionItemBtnStyle"
+                android:text="@string/runtime_permission" />
+
+            <Button
+                android:id="@+id/btn_launcher"
+                style="@style/PermissionItemBtnStyle"
+                android:text="@string/launcher" />
+
+            <Button
+                android:id="@+id/btn_screen_bright"
+                style="@style/PermissionItemBtnStyle"
+                android:text="@string/screen_bright" />
+
+            <Button
+                android:id="@+id/btn_screen_orientation"
+                style="@style/PermissionItemBtnStyle"
+                android:text="@string/screen_orientation" />
+
+            <Button
+                android:id="@+id/btn_screen_shot"
+                style="@style/PermissionItemBtnStyle"
+                android:text="@string/screen_shot" />
+
+            <Button
+                android:id="@+id/btn_adb"
+                style="@style/PermissionItemBtnStyle"
+                android:text="@string/adb" />
+
+            <Button
+                android:id="@+id/btn_system_bar"
+                style="@style/PermissionItemBtnStyle"
+                android:text="@string/system_bar" />
+
+            <Button
+                android:id="@+id/btn_system_time"
+                style="@style/PermissionItemBtnStyle"
+                android:text="@string/system_time" />
+
+            <Button
+                android:id="@+id/btn_package_manager"
+                style="@style/PermissionItemBtnStyle"
+                android:text="@string/package_manager" />
+
+            <Button
+                android:id="@+id/btn_ntp_time"
+                style="@style/PermissionItemBtnStyle"
+                android:text="NTP Time" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

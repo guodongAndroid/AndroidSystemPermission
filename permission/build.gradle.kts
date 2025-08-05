@@ -49,8 +49,4 @@ dependencies {
     implementation(libs.kotlin.coroutines.android)
 
     compileOnly(project(":framework"))
-
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
 }
