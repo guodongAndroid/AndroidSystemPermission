@@ -114,7 +114,7 @@ interface ISystemPermission {
     fun isAutoBrightnessEnabled(): Boolean
 
     /**
-     * 是否启动永不关闭屏幕
+     * 是否启用永不关闭屏幕
      */
     fun enableScreenNeverOff(enable: Boolean)
 
