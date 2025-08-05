@@ -8,7 +8,7 @@
 
 ## 使用
 
-首先在 Application 用初始化：
+首先在 Application 里初始化：
 
 ```kotlin
 class PermissionApplication : Application() {
