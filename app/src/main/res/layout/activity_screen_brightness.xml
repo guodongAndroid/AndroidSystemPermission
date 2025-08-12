@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <Button
+            android:id="@+id/btn_open_display_settings"
+            style="@style/PermissionItemBtnStyle"
+            android:text="@string/open_display_settings" />
+
+        <Button
+            android:id="@+id/btn_screen_off"
+            style="@style/PermissionItemBtnStyle"
+            android:text="@string/screen_off" />
+
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/ms_ui_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dark_ui"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/ms_never_off"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/screen_never_off" />
+
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/ms_auto_brightness"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/auto_brightness" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_brightness"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/percent" />
+
+            <com.google.android.material.slider.Slider
+                android:id="@+id/slider"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:stepSize="1"
+                android:value="1"
+                android:valueFrom="1"
+                android:valueTo="100"
+                android:contentDescription="@null"
+                android:importantForAccessibility="no"
+                app:labelBehavior="floating" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

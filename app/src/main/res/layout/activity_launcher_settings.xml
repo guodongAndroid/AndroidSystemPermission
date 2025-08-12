@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tv_launcher_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/launcher_component_name"/>
+
+    <Button
+        android:id="@+id/btn_get_launcher"
+        style="@style/PermissionItemBtnStyle"
+        android:text="@string/get_launcher" />
+
+    <Button
+        android:id="@+id/btn_set_launcher"
+        style="@style/PermissionItemBtnStyle"
+        android:text="@string/set_launcher" />
+
+    <Button
+        android:id="@+id/btn_open_launcher_settings"
+        style="@style/PermissionItemBtnStyle"
+        android:text="@string/open_launcher_settings" />
+
+    <Button
+        android:id="@+id/btn_open_system_launcher"
+        style="@style/PermissionItemBtnStyle"
+        android:text="@string/open_system_launcher" />
+
+    <Button
+        android:id="@+id/btn_open_system_settings"
+        style="@style/PermissionItemBtnStyle"
+        android:text="@string/open_system_settings" />
+
+    <Button
+        android:id="@+id/btn_open_development_settings"
+        style="@style/PermissionItemBtnStyle"
+        android:text="@string/open_development_settings" />
+</LinearLayout>

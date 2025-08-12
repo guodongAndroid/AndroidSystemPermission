@@ -8,12 +8,21 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/tv_app_version"
+        android:id="@+id/tv_os_version"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/os_version" />
+
+    <TextView
+        android:id="@+id/tv_app_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_os_version"
         tools:text="@string/app_version" />
 
     <TextView
@@ -38,7 +47,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="10dp"
+        android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,7 +55,7 @@
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
@@ -61,24 +70,19 @@
                 android:text="@string/device" />
 
             <Button
-                android:id="@+id/btn_runtime_permission"
-                style="@style/PermissionItemBtnStyle"
-                android:text="@string/runtime_permission" />
-
-            <Button
                 android:id="@+id/btn_launcher"
                 style="@style/PermissionItemBtnStyle"
                 android:text="@string/launcher" />
 
             <Button
-                android:id="@+id/btn_screen_bright"
+                android:id="@+id/btn_screen_brightness"
                 style="@style/PermissionItemBtnStyle"
                 android:text="@string/screen_bright" />
 
             <Button
-                android:id="@+id/btn_screen_orientation"
+                android:id="@+id/btn_screen_rotation"
                 style="@style/PermissionItemBtnStyle"
-                android:text="@string/screen_orientation" />
+                android:text="@string/screen_rotation" />
 
             <Button
                 android:id="@+id/btn_screen_shot"
@@ -101,14 +105,14 @@
                 android:text="@string/system_time" />
 
             <Button
-                android:id="@+id/btn_package_manager"
+                android:id="@+id/btn_application_manager"
                 style="@style/PermissionItemBtnStyle"
-                android:text="@string/package_manager" />
+                android:text="@string/application_manager" />
 
             <Button
                 android:id="@+id/btn_ntp_time"
                 style="@style/PermissionItemBtnStyle"
-                android:text="NTP Time" />
+                android:text="@string/ntp_time" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

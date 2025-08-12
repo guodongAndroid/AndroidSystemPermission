@@ -10,26 +10,12 @@ import com.guodong.android.system.permission.IPackageInstallObserver
  */
 internal object PackageInstallerCompat : IPackageInstaller {
 
-    private val installer = when {
-        Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE -> {
-            PackageInstallerApi34
-        }
-
-        Build.VERSION.SDK_INT >= Build.VERSION_CODES.P -> {
-            PackageInstallerApi28
-        }
-
-        else -> {
-            PackageInstallerApi25
-        }
-    }
-
     override fun installPackage(
         context: Context,
         apkFilePath: String,
         observer: IPackageInstallObserver
     ) {
-        installer.installPackage(context, apkFilePath, observer)
+        super.installPackage(context, apkFilePath, observer)
     }
 
     override fun uninstallPackage(
@@ -37,6 +23,6 @@ internal object PackageInstallerCompat : IPackageInstaller {
         packageName: String,
         observer: IPackageDeleteObserver
     ) {
-        installer.uninstallPackage(context, packageName, observer)
+        super.uninstallPackage(context, packageName, observer)
     }
 }

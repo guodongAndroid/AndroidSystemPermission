@@ -1,23 +1,26 @@
 package com.guodong.android.system.permission.android.power
 
-import android.content.Context
+import android.os.SystemClock
+import rikka.hidden.compat.PowerManagerApis
 
 /**
  * Created by john.wick on 2025/6/30
  */
 internal interface IPower {
 
-    companion object {
-        internal const val METHOD_GO_TO_SLEEP = "goToSleep"
-        internal const val METHOD_WAKE_UP = "wakeUp"
-
-        /**
-         * @see [PowerManager#WAKE_REASON_APPLICATION]
-         */
-        internal const val WAKE_REASON_APPLICATION = 2
+    fun reboot() {
+        PowerManagerApis.rebootNoThrow("")
     }
 
-    fun goToSleep(context: Context): Boolean
+    fun shutdown() {
+        PowerManagerApis.shutdownNoThrow("")
+    }
 
-    fun wakeUp(context: Context): Boolean
+    fun goToSleep() {
+        PowerManagerApis.goToSleepNoThrow(SystemClock.uptimeMillis())
+    }
+
+    fun wakeUp() {
+        PowerManagerApis.wakeUpNoThrow(SystemClock.uptimeMillis())
+    }
 }

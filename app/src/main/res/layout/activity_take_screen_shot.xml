@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <Button
+        android:id="@+id/btn_take"
+        style="@style/PermissionItemBtnStyle"
+        android:text="@string/take_screenshot" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_screen_shot"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="16dp"
+        android:src="@mipmap/ic_launcher"/>
+
+</LinearLayout>

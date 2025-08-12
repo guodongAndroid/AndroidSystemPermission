@@ -59,18 +59,18 @@ android {
             resValue("string", "app_name", "AndroidSystemPermissionApp-aosp")
         }
 
-        create("rockchips") {
-            applicationIdSuffix = ".rockchips"
-            versionNameSuffix = "-rockchips"
-            dimension = "vendor"
-            resValue("string", "app_name", "AndroidSystemPermissionApp-rockchips")
-        }
-
         create("hikvision") {
             applicationIdSuffix = ".hikvision"
             versionNameSuffix = "-hikvision"
             dimension = "vendor"
             resValue("string", "app_name", "AndroidSystemPermissionApp-hikvision")
+        }
+
+        create("dwin") {
+            applicationIdSuffix = ".dwin"
+            versionNameSuffix = "-dwin"
+            dimension = "vendor"
+            resValue("string", "app_name", "AndroidSystemPermissionApp-dwin")
         }
     }
 
@@ -79,12 +79,12 @@ android {
             java.srcDirs("src/aosp/java")
         }
 
-        getByName("rockchips") {
-            java.srcDirs("src/rockchips/java")
-        }
-
         getByName("hikvision") {
             java.srcDirs("src/hikvision/java")
+        }
+
+        getByName("dwin") {
+            java.srcDirs("src/dwin/java")
         }
     }
 
@@ -108,14 +108,17 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.recyclerview)
+    implementation(libs.androidx.swiperefreshlayout)
     implementation(libs.androidx.viewpager2)
 
     implementation(libs.kotlin.coroutines.core)
     implementation(libs.kotlin.coroutines.android)
 
+    implementation(libs.file.picker)
+
     add("aospImplementation", project(":permission"))
-    add("rockchipsImplementation", project(":permission-adapters:rockchips"))
     add("hikvisionImplementation", project(":permission-adapters:hikvision"))
+    add("dwinImplementation", project(":permission-adapters:dwin"))
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

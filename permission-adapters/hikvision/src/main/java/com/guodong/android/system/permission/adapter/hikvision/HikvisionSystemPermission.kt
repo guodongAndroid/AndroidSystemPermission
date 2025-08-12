@@ -7,7 +7,8 @@ import android.os.SystemProperties
 import android.provider.Settings
 import android.util.Log
 import androidx.annotation.Keep
-import com.guodong.android.system.permission.adapter.rockchips.RockChipsSystemPermission
+import com.guodong.android.system.permission.AospSystemPermission
+import com.guodong.android.system.permission.Vendor
 import com.guodong.android.system.permission.domain.NetworkAddress
 import com.hik.vis.module_base.IHikCallback
 import com.hik.vis.module_base.beans.ResponseStatus
@@ -26,7 +27,7 @@ import kotlin.coroutines.suspendCoroutine
  * Created by john.wick on 2025/7/2
  */
 @Keep
-class HikvisionSystemPermission : RockChipsSystemPermission() {
+class HikvisionSystemPermission : AospSystemPermission() {
 
     @Suppress("SpellCheckingInspection")
     companion object {
@@ -53,6 +54,11 @@ class HikvisionSystemPermission : RockChipsSystemPermission() {
             .setClientName(TAG)
         IHikManager.init(config)
         system = IHikManager.getSystemManager()
+    }
+
+    @Vendor
+    override fun getVendor(): String {
+        return Vendor.HIKVISION
     }
 
     override suspend fun setEthernetStaticAddress(
@@ -138,23 +144,22 @@ class HikvisionSystemPermission : RockChipsSystemPermission() {
         })
     }
 
-    override fun reboot(): Boolean {
+    override fun reboot() {
         system.rebootDevice()
-        return true
     }
 
     override fun factoryReset() {
         system.factoryReset(FactoryResetMode.FULL)
     }
 
-    override fun setScreenBright(level: Int) {
+    override fun setScreenBrightness(level: Int) {
         val levelTemp = level.coerceIn(1, 100)
-        if (levelTemp != getScreenBright()) {
+        if (levelTemp != getScreenBrightness()) {
             system.setScreenBright(levelTemp, null)
         }
     }
 
-    override fun getScreenBright(): Int {
+    override fun getScreenBrightness(): Int {
         return system.screenBright
     }
 
@@ -175,27 +180,16 @@ class HikvisionSystemPermission : RockChipsSystemPermission() {
         return system.adbStatus
     }
 
-    override fun hideSystemBar(): Boolean {
-        system.controlNavigationBar(false)
-
-        Settings.System.putInt(context.contentResolver, ACTION_HIDE_STATUS_BAR, 0)
-        Settings.System.putInt(context.contentResolver, ACTION_HIDE_NAVI_BAR, 0)
-
-        context.sendBroadcast(Intent(ACTION_HIDE_STATUS_BAR))
-        context.sendBroadcast(Intent(ACTION_HIDE_NAVI_BAR))
-        return true
+    override fun enableSystemBar(enable: Boolean) {
+        if (enable) {
+            showSystemBar()
+        } else {
+            hideSystemBar()
+        }
     }
 
-    override fun showSystemBar(): Boolean {
-        system.controlNavigationBar(true)
-
-        Settings.System.putInt(context.contentResolver, ACTION_SHOW_STATUS_BAR, 0)
-        Settings.System.putInt(context.contentResolver, ACTION_SHOW_NAVI_BAR, 0)
-
-        context.sendBroadcast(Intent(ACTION_SHOW_STATUS_BAR))
-        context.sendBroadcast(Intent(ACTION_SHOW_NAVI_BAR))
-
-        return true
+    override fun isSystemBarEnabled(): Boolean {
+        return Settings.System.getInt(context.contentResolver, ACTION_SHOW_STATUS_BAR, 0) == 1
     }
 
     override suspend fun setDate(year: Int, month: Int, day: Int): Boolean =
@@ -244,5 +238,25 @@ class HikvisionSystemPermission : RockChipsSystemPermission() {
                 cont.resume(EMPTY_CHAR_SEQUENCE)
             }
         })
+    }
+
+    private fun hideSystemBar() {
+        system.controlNavigationBar(false)
+
+        Settings.System.putInt(context.contentResolver, ACTION_SHOW_STATUS_BAR, 0)
+        Settings.System.putInt(context.contentResolver, ACTION_SHOW_NAVI_BAR, 0)
+
+        context.sendBroadcast(Intent(ACTION_HIDE_STATUS_BAR))
+        context.sendBroadcast(Intent(ACTION_HIDE_NAVI_BAR))
+    }
+
+    private fun showSystemBar() {
+        system.controlNavigationBar(true)
+
+        Settings.System.putInt(context.contentResolver, ACTION_SHOW_STATUS_BAR, 1)
+        Settings.System.putInt(context.contentResolver, ACTION_SHOW_NAVI_BAR, 1)
+
+        context.sendBroadcast(Intent(ACTION_SHOW_STATUS_BAR))
+        context.sendBroadcast(Intent(ACTION_SHOW_NAVI_BAR))
     }
 }

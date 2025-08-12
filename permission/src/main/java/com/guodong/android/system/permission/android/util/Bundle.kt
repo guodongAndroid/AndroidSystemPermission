@@ -6,6 +6,7 @@ import android.os.Parcelable
 /**
  * Created by john.wick on 2025/5/27
  */
+@Suppress("FunctionName")
 fun Bundle.ToString(): String {
     val b = StringBuilder(128)
     b.append("Bundle[{")
@@ -14,6 +15,7 @@ fun Bundle.ToString(): String {
     return b.toString()
 }
 
+@Suppress("FunctionName")
 fun Bundle.ToShortString(b: StringBuilder) {
     var first = true
     for (key in this.keySet()) {
@@ -21,6 +23,8 @@ fun Bundle.ToShortString(b: StringBuilder) {
             b.append(", ")
         }
         b.append(key).append('=')
+
+        @Suppress("DEPRECATION")
         val value = this[key]
         if (value is IntArray) {
             b.append(value.contentToString())

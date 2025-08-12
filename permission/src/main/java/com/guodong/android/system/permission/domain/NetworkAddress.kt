@@ -1,5 +1,6 @@
 package com.guodong.android.system.permission.domain
 
+import androidx.annotation.IntDef
 import androidx.annotation.Keep
 
 /**
@@ -12,7 +13,7 @@ data class NetworkAddress(
     val netmask: String,
     val gateway: String,
     val dns1: String,
-    val dns2: String,
+    val dns2: String?,
 ) {
     @Keep
     companion object {
@@ -27,6 +28,11 @@ data class NetworkAddress(
     }
 
     @Keep
+    @IntDef(
+        IpAssignment.STATIC,
+        IpAssignment.DHCP,
+        IpAssignment.UNASSIGNED,
+    )
     annotation class IpAssignment {
         @Keep
         companion object {

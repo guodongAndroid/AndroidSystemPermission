@@ -1,7 +1,6 @@
 package com.guodong.android.system.permission.android.runtime
 
 import android.content.Context
-import com.guodong.android.system.permission.android.runtime.IRuntimePermission
 
 /**
  * Created by john.wick on 2025/5/27

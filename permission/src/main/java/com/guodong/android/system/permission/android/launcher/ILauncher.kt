@@ -4,6 +4,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import rikka.hidden.compat.LauncherApis
 
 /**
  * Created by john.wick on 2025/5/27
@@ -14,9 +15,13 @@ internal interface ILauncher {
         private const val TAG = "ILauncher"
     }
 
-    fun getLauncher(context: Context): ComponentName?
+    fun getLauncher(context: Context): ComponentName? {
+        return LauncherApis.getLauncherNoThrow()
+    }
 
-    fun setLauncher(context: Context, packageName: String): Boolean
+    fun setLauncher(context: Context, packageName: String): Boolean {
+        return LauncherApis.setLauncherNoThrow(context, packageName)
+    }
 
     fun openSystemLauncher(context: Context) {
         try {

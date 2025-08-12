@@ -3,6 +3,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:sharedUserId="android.uid.system">
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission
+        android:name="android.permission.WRITE_SECURE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <uses-permission
+        android:name="android.permission.QUERY_ALL_PACKAGES"
+        tools:ignore="QueryAllPackagesPermission" />
+
     <application
         android:name=".PermissionApplication"
         android:allowBackup="true"
@@ -10,6 +36,7 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidSystemPermissionApp"
@@ -21,10 +48,23 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.HOME" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
-        <activity android:name="com.guodong.android.system.permission.app.activities.EthernetActivity" />
+        <activity android:name=".activities.EthernetActivity" />
+        <activity android:name=".activities.TakeScreenshotActivity" />
+        <activity android:name=".activities.LauncherSettingsActivity" />
+        <activity android:name=".activities.DeviceActivity" />
+        <activity android:name=".activities.ScreenBrightnessActivity" />
+        <activity android:name=".activities.ScreenRotationActivity" />
+        <activity android:name=".activities.AdbActivity" />
+        <activity android:name=".activities.SystemBarActivity" />
+        <activity android:name=".activities.SystemTimeActivity" />
+        <activity android:name=".activities.ApplicationManagerActivity" />
+        <activity android:name=".activities.ApplicationDetailActivity" />
+        <activity android:name="com.guodong.android.system.permission.app.activities.NtpActivity" />
     </application>
 
 </manifest>

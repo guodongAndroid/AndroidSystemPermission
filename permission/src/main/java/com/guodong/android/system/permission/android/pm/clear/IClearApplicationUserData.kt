@@ -2,13 +2,10 @@ package com.guodong.android.system.permission.android.pm.clear
 
 import android.content.Context
 import android.content.pm.IPackageDataObserver
-import android.content.pm.IPackageManager
-import android.os.Process
-import android.os.ServiceManager
+import android.os.UserHandleHidden
 import android.util.Log
 import com.guodong.android.system.permission.IApplicationUserDataCleanObserver
-import com.guodong.android.system.permission.android.util.PACKAGE_SERVICE
-import com.guodong.android.system.permission.android.util.userId
+import rikka.hidden.compat.PackageManagerApis
 
 /**
  * Created by john.wick on 2025/5/27
@@ -25,10 +22,7 @@ internal interface IClearApplicationUserData {
         observer: IApplicationUserDataCleanObserver
     ) {
         try {
-            val binder = ServiceManager.getService(PACKAGE_SERVICE)
-            val pms = IPackageManager.Stub.asInterface(binder)
-
-            pms.clearApplicationUserData(
+            PackageManagerApis.clearApplicationUserData(
                 packageName,
                 object : IPackageDataObserver.Stub() {
                     override fun onRemoveCompleted(packageName: String, succeeded: Boolean) {
@@ -36,7 +30,7 @@ internal interface IClearApplicationUserData {
                         observer.onApplicationUserDataCleaned(packageName, succeeded)
                     }
                 },
-                Process.myUserHandle().userId
+                UserHandleHidden.myUserId(),
             )
         } catch (e: Exception) {
             Log.e(TAG, "clearApplicationUserData: $packageName", e)

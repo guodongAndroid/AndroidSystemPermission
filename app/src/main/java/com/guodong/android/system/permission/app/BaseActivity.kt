@@ -51,11 +51,11 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
             }
         }
 
-        initViews()
+        binding.initViews()
     }
 
     protected open fun isKeepScreenOn() = true
-    protected open fun isEnableEdgeToEdge() = true
+    protected open fun isEnableEdgeToEdge() = false
     protected open fun isPaddingSystemBar() = false
 
     protected open fun isIdleEnabled(): Boolean = false
@@ -80,7 +80,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     }
 
     abstract fun getViewBinding(): VB
-    abstract fun initViews()
+    abstract fun VB.initViews()
 
     override fun onResume() {
         super.onResume()

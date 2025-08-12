@@ -1,6 +1,7 @@
 package com.guodong.android.system.permission.android.adb
 
 import android.content.Context
+import androidx.annotation.IntRange
 
 /**
  * Created by john.wick on 2025/6/30
@@ -16,4 +17,9 @@ internal interface IAdb {
     fun enableAbd(context: Context, enable: Boolean)
 
     fun isAdbEnabled(context: Context): Boolean
+
+    fun setAdbPort(@IntRange(from = 5000, to = 65535)port: Int)
+
+    @IntRange(from = 5000, to = 65535)
+    fun getAdbPort(): Int
 }

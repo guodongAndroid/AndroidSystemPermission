@@ -9,25 +9,15 @@ import android.os.Build
  */
 internal object LauncherCompat : ILauncher {
 
-    private val launcher = when {
-        Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q -> {
-            LauncherApi29
-        }
-
-        else -> {
-            LauncherApi25
-        }
-    }
-
     override fun getLauncher(context: Context): ComponentName? {
-        return launcher.getLauncher(context)
+        return super.getLauncher(context)
     }
 
     override fun setLauncher(context: Context, packageName: String): Boolean {
-        return launcher.setLauncher(context, packageName)
+        return super.setLauncher(context, packageName)
     }
 
     override fun openSystemLauncher(context: Context) {
-        launcher.openSystemLauncher(context)
+        super.openSystemLauncher(context)
     }
 }

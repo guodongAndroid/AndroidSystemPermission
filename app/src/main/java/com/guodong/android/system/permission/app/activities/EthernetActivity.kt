@@ -33,13 +33,11 @@ class EthernetActivity : BaseActivity<ActivityEthernetBinding>() {
         return ActivityEthernetBinding.inflate(LayoutInflater.from(this))
     }
 
-    override fun initViews() {
-        initTextChanageListener()
-
-        lifecycleScope.launch { refreshEthernet() }
+    override fun ActivityEthernetBinding.initViews() {
+        initTextChangeListener()
 
         binding.btnGetEthernet.setOnClickListener {
-            lifecycleScope.launch { refreshEthernet() }
+            lifecycleScope.launch { refreshEthernetUI() }
         }
 
         binding.btnSetStatic.setOnClickListener {
@@ -82,7 +80,7 @@ class EthernetActivity : BaseActivity<ActivityEthernetBinding>() {
 
                 delay(1_000)
 
-                refreshEthernet()
+                refreshEthernetUI()
             }
         }
 
@@ -93,12 +91,17 @@ class EthernetActivity : BaseActivity<ActivityEthernetBinding>() {
                     .show()
 
                 delay(5_000)
-                refreshEthernet()
+                refreshEthernetUI()
             }
         }
     }
 
-    private fun initTextChanageListener() {
+    override fun onResume() {
+        super.onResume()
+        lifecycleScope.launch { binding.refreshEthernetUI() }
+    }
+
+    private fun initTextChangeListener() {
         binding.etEthernetIp.doAfterTextChanged {
             val error = if (it.isNullOrEmpty() || !it.isIP()) {
                 getString(R.string.ethernet_ip_error)
@@ -152,8 +155,8 @@ class EthernetActivity : BaseActivity<ActivityEthernetBinding>() {
         }
     }
 
-    private suspend fun refreshEthernet() {
-        val address = getEthernet()
+    private suspend fun ActivityEthernetBinding.refreshEthernetUI() {
+        val address = getEthernetNetworkAddress()
         val mode = when (address.ipAssignment) {
             NetworkAddress.IpAssignment.STATIC -> {
                 enabledEditText(true)
@@ -171,26 +174,26 @@ class EthernetActivity : BaseActivity<ActivityEthernetBinding>() {
             }
         }
 
-        binding.tvEthernetMode.text = mode
+        tvEthernetMode.text = mode
 
-        binding.etEthernetIp.setText(address.address)
-        binding.etEthernetNetmask.setText(address.netmask)
-        binding.etEthernetGateway.setText(address.gateway)
-        binding.etEthernetDns1.setText(address.dns1)
-        binding.etEthernetDns2.setText(address.dns2)
+        etEthernetIp.setText(address.address)
+        etEthernetNetmask.setText(address.netmask)
+        etEthernetGateway.setText(address.gateway)
+        etEthernetDns1.setText(address.dns1)
+        etEthernetDns2.setText(address.dns2)
 
-        binding.tvEthernetMac.text = SystemPermissionCompat.getEthernetMacAddress()
+        tvEthernetMac.text = SystemPermissionCompat.getEthernetMacAddress()
     }
 
-    private fun enabledEditText(enable: Boolean) {
-        binding.etEthernetIp.isEnabled = enable
-        binding.etEthernetNetmask.isEnabled = enable
-        binding.etEthernetGateway.isEnabled = enable
-        binding.etEthernetDns1.isEnabled = enable
-        binding.etEthernetDns2.isEnabled = enable
+    private fun ActivityEthernetBinding.enabledEditText(enable: Boolean) {
+        etEthernetIp.isEnabled = enable
+        etEthernetNetmask.isEnabled = enable
+        etEthernetGateway.isEnabled = enable
+        etEthernetDns1.isEnabled = enable
+        etEthernetDns2.isEnabled = enable
     }
 
-    private suspend fun getEthernet(): NetworkAddress {
+    private suspend fun getEthernetNetworkAddress(): NetworkAddress {
         return SystemPermissionCompat.getEthernetNetworkAddress()
     }
 }

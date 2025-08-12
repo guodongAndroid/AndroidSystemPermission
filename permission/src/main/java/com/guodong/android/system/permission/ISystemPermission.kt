@@ -2,12 +2,15 @@ package com.guodong.android.system.permission
 
 import android.app.ActivityThread
 import android.app.Application
+import android.content.ComponentName
 import android.content.Context
 import android.graphics.Bitmap
+import android.os.Build
 import androidx.annotation.IntRange
 import androidx.annotation.Keep
+import androidx.annotation.RequiresApi
 import androidx.annotation.RestrictTo
-import com.guodong.android.system.permission.annotation.Orientation
+import com.guodong.android.system.permission.annotation.Rotation
 import com.guodong.android.system.permission.domain.NetworkAddress
 import java.util.concurrent.TimeUnit
 
@@ -28,6 +31,14 @@ interface ISystemPermission {
      * 设置上下文
      */
     fun setContext(context: Context)
+
+    /**
+     * 厂商，子类必须实现
+     *
+     * @see [Vendor]
+     */
+    @Vendor
+    fun getVendor(): String
 
     /**
      * 获取版本
@@ -55,12 +66,20 @@ interface ISystemPermission {
      */
     suspend fun getEthernetNetworkAddress(): NetworkAddress
 
+    /**
+     * 获取以太网MAC地址
+     */
     suspend fun getEthernetMacAddress(): String
 
     /**
-     * 重启设备
+     * 重启
      */
-    fun reboot(): Boolean
+    fun reboot()
+
+    /**
+     * 关机
+     */
+    fun shutdown()
 
     /**
      * 恢复出厂设置
@@ -71,6 +90,11 @@ interface ISystemPermission {
      * 静默授予权限
      */
     fun grantRuntimePermission(packageName: String): Boolean
+
+    /**
+     * 获取系统桌面
+     */
+    fun getLauncher(): ComponentName?
 
     /**
      * 静默设置系统桌面
@@ -95,13 +119,13 @@ interface ISystemPermission {
     /**
      * 设置屏幕百分比亮度
      */
-    fun setScreenBright(@IntRange(from = 1, to = 100) level: Int)
+    fun setScreenBrightness(@IntRange(from = 1, to = 100) level: Int)
 
     /**
      * 获取屏幕百分比亮度
      */
     @IntRange(from = 1, to = 100)
-    fun getScreenBright(): Int
+    fun getScreenBrightness(): Int
 
     /**
      * 是否启用自动调节亮度
@@ -114,12 +138,24 @@ interface ISystemPermission {
     fun isAutoBrightnessEnabled(): Boolean
 
     /**
-     * 是否启用永不关闭屏幕
+     * 是否启用深色主题
+     */
+    @RequiresApi(Build.VERSION_CODES.R)
+    fun enableDarkUI(enable: Boolean): Boolean
+
+    /**
+     * 深色主题是否启用
+     */
+    @RequiresApi(Build.VERSION_CODES.R)
+    fun isDarkUIEnabled(): Boolean
+
+    /**
+     * 是否启用屏幕永不关闭
      */
     fun enableScreenNeverOff(enable: Boolean)
 
     /**
-     * 永不关闭屏幕是否启用
+     * 屏幕永不关闭是否启用
      */
     fun isScreenNeverOffEnabled(): Boolean
 
@@ -134,6 +170,27 @@ interface ISystemPermission {
     fun setScreenOff()
 
     /**
+     * 是否启用自动旋转屏幕
+     */
+    fun enableAutoScreenRotation(enable: Boolean)
+
+    /**
+     * 自动旋转屏幕是否启用
+     */
+    fun isAutoScreenRotationEnabled(): Boolean
+
+    /**
+     * 设置屏幕旋转，顺时针旋转
+     */
+    fun setScreenRotation(@Rotation rotation: Int)
+
+    /**
+     * 获取屏幕旋转
+     */
+    @Rotation
+    fun getScreenRotation(): Int
+
+    /**
      * 是否启用ADB
      */
     fun enableAdb(enable: Boolean)
@@ -144,14 +201,30 @@ interface ISystemPermission {
     fun isAdbEnabled(): Boolean
 
     /**
-     * 隐藏状态栏和导航栏
+     * 设置ADB端口
      */
-    fun hideSystemBar(): Boolean
+    fun setAdbPort(@IntRange(from = 5000, to = 65535) port: Int)
 
     /**
-     * 显示状态栏和导航栏
+     * 获取ADB端口
      */
-    fun showSystemBar(): Boolean
+    @IntRange(from = 5000, to = 65535)
+    fun getAdbPort(): Int
+
+    /**
+     * 是否启用状态栏和导航栏
+     */
+    fun enableSystemBar(enable: Boolean)
+
+    /**
+     * 状态栏和导航栏是否启用
+     */
+    fun isSystemBarEnabled(): Boolean
+
+    /**
+     * 设置系统时区
+     */
+    suspend fun setTimeZone(timeZone: String): Boolean
 
     /**
      * 设置系统日期
@@ -164,9 +237,14 @@ interface ISystemPermission {
     suspend fun setTime(hour: Int, minute: Int, second: Int): Boolean
 
     /**
-     * 设置屏幕旋转方向，顺时针旋转
+     * 启用24小时制
      */
-    fun setOrientation(@Orientation angle: Int)
+    suspend fun enableTimeFormat24H(enable: Boolean): Boolean
+
+    /**
+     * 24小时制是否启用
+     */
+    suspend fun isTimeFormat24HEnabled(): Boolean
 
     /**
      * 清除应用程序用户数据，包含缓存数据
@@ -182,6 +260,16 @@ interface ISystemPermission {
      * 静默卸载
      */
     fun uninstallPackage(packageName: String, observer: IPackageDeleteObserver)
+
+    /**
+     * @see [android.app.ActivityManager.killBackgroundProcesses]
+     */
+    fun killBackgroundProcesses(packageName: String)
+
+    /**
+     * @see [android.app.ActivityManager.forceStopPackage]
+     */
+    fun forceStopPackage(packageName: String)
 
     /**
      * OTA升级

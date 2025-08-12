@@ -1,10 +1,14 @@
 package com.guodong.android.system.permission
 
 import android.app.Application
+import android.content.ComponentName
 import android.content.Context
 import android.graphics.Bitmap
+import android.os.Build
+import androidx.annotation.IntRange
 import androidx.annotation.Keep
-import com.guodong.android.system.permission.annotation.Orientation
+import androidx.annotation.RequiresApi
+import com.guodong.android.system.permission.annotation.Rotation
 import com.guodong.android.system.permission.domain.NetworkAddress
 import java.util.concurrent.TimeUnit
 
@@ -33,6 +37,10 @@ object SystemPermissionCompat : ISystemPermission {
         delegate.setContext(context)
     }
 
+    override fun getVendor(): String {
+        return delegate.getVendor()
+    }
+
     override fun getVersion(): String {
         return delegate.getVersion()
     }
@@ -59,8 +67,12 @@ object SystemPermissionCompat : ISystemPermission {
         return delegate.getEthernetMacAddress()
     }
 
-    override fun reboot(): Boolean {
-        return delegate.reboot()
+    override fun reboot() {
+        delegate.reboot()
+    }
+
+    override fun shutdown() {
+        delegate.shutdown()
     }
 
     override fun factoryReset() {
@@ -69,6 +81,10 @@ object SystemPermissionCompat : ISystemPermission {
 
     override fun grantRuntimePermission(packageName: String): Boolean {
         return delegate.grantRuntimePermission(packageName)
+    }
+
+    override fun getLauncher(): ComponentName? {
+        return delegate.getLauncher()
     }
 
     override fun setLauncher(packageName: String): Boolean {
@@ -87,12 +103,12 @@ object SystemPermissionCompat : ISystemPermission {
         delegate.openSystemDevelopmentSettings()
     }
 
-    override fun setScreenBright(level: Int) {
-        delegate.setScreenBright(level)
+    override fun setScreenBrightness(level: Int) {
+        delegate.setScreenBrightness(level)
     }
 
-    override fun getScreenBright(): Int {
-        return delegate.getScreenBright()
+    override fun getScreenBrightness(): Int {
+        return delegate.getScreenBrightness()
     }
 
     override fun enableAutoBrightness(enable: Boolean): Boolean {
@@ -101,6 +117,16 @@ object SystemPermissionCompat : ISystemPermission {
 
     override fun isAutoBrightnessEnabled(): Boolean {
         return delegate.isAutoBrightnessEnabled()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.R)
+    override fun enableDarkUI(enable: Boolean): Boolean {
+        return delegate.enableDarkUI(enable)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.R)
+    override fun isDarkUIEnabled(): Boolean {
+        return delegate.isDarkUIEnabled()
     }
 
     override fun enableScreenNeverOff(enable: Boolean) {
@@ -119,6 +145,23 @@ object SystemPermissionCompat : ISystemPermission {
         delegate.setScreenOff()
     }
 
+    override fun enableAutoScreenRotation(enable: Boolean) {
+        delegate.enableAutoScreenRotation(enable)
+    }
+
+    override fun isAutoScreenRotationEnabled(): Boolean {
+        return delegate.isAutoScreenRotationEnabled()
+    }
+
+    override fun setScreenRotation(@Rotation rotation: Int) {
+        delegate.setScreenRotation(rotation)
+    }
+
+    @Rotation
+    override fun getScreenRotation(): Int {
+        return delegate.getScreenRotation()
+    }
+
     override fun enableAdb(enable: Boolean) {
         delegate.enableAdb(enable)
     }
@@ -127,12 +170,25 @@ object SystemPermissionCompat : ISystemPermission {
         return delegate.isAdbEnabled()
     }
 
-    override fun hideSystemBar(): Boolean {
-        return delegate.hideSystemBar()
+    override fun setAdbPort(@IntRange(from = 5000, to = 65535) port: Int) {
+        delegate.setAdbPort(port)
     }
 
-    override fun showSystemBar(): Boolean {
-        return delegate.showSystemBar()
+    @IntRange(from = 5000, to = 65535)
+    override fun getAdbPort(): Int {
+        return delegate.getAdbPort()
+    }
+
+    override fun enableSystemBar(enable: Boolean) {
+        delegate.enableSystemBar(enable)
+    }
+
+    override fun isSystemBarEnabled(): Boolean {
+        return delegate.isSystemBarEnabled()
+    }
+
+    override suspend fun setTimeZone(timeZone: String): Boolean {
+        return delegate.setTimeZone(timeZone)
     }
 
     override suspend fun setDate(year: Int, month: Int, day: Int): Boolean {
@@ -143,8 +199,12 @@ object SystemPermissionCompat : ISystemPermission {
         return delegate.setTime(hour, minute, second)
     }
 
-    override fun setOrientation(@Orientation angle: Int) {
-        delegate.setOrientation(angle)
+    override suspend fun enableTimeFormat24H(enable: Boolean): Boolean {
+        return delegate.enableTimeFormat24H(enable)
+    }
+
+    override suspend fun isTimeFormat24HEnabled(): Boolean {
+        return delegate.isTimeFormat24HEnabled()
     }
 
     override fun clearApplicationUserData(
@@ -160,6 +220,14 @@ object SystemPermissionCompat : ISystemPermission {
 
     override fun uninstallPackage(packageName: String, observer: IPackageDeleteObserver) {
         delegate.uninstallPackage(packageName, observer)
+    }
+
+    override fun killBackgroundProcesses(packageName: String) {
+        delegate.killBackgroundProcesses(packageName)
+    }
+
+    override fun forceStopPackage(packageName: String) {
+        delegate.forceStopPackage(packageName)
     }
 
     override fun installOTAPackage(otaFilePath: String, observer: IOTAPackageInstallObserver) {

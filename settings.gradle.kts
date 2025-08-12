@@ -9,6 +9,7 @@ pluginManagement {
         }
         mavenCentral()
         gradlePluginPortal()
+        mavenLocal()
     }
 }
 dependencyResolutionManagement {
@@ -16,13 +17,14 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        mavenLocal()
+        maven { setUrl("https://jitpack.io") }
     }
 }
 
 rootProject.name = "AndroidSystemPermissionApp"
 include(":app")
 include(":permission")
-include(":framework")
 include(":permission-aars:hikvision")
 include(":permission-adapters:hikvision")
-include(":permission-adapters:rockchips")
+include(":permission-adapters:dwin")

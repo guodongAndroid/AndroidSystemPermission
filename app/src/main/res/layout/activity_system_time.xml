@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tv_time_zone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/current_time_zone"/>
+
+        <TextView
+            android:id="@+id/tv_date_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/current_date_time"/>
+
+        <Button
+            android:id="@+id/btn_open_date_settings"
+            style="@style/PermissionItemBtnStyle"
+            android:text="@string/open_date_settings" />
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/acs_time_zones"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"/>
+
+        <Button
+            android:id="@+id/btn_date"
+            style="@style/PermissionItemBtnStyle"
+            android:text="@string/set_date" />
+
+        <Button
+            android:id="@+id/btn_time"
+            style="@style/PermissionItemBtnStyle"
+            android:text="@string/set_time" />
+
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/ms_24h"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/time_format_24h"/>
+
+    </LinearLayout>
+
+</ScrollView>

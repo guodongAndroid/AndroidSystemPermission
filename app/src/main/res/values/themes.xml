@@ -27,4 +27,9 @@
         <item name="android:layout_marginTop">20dp</item>
         <item name="android:textSize">18sp</item>
     </style>
+
+    <style name="RoundImageStyle">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
 </resources>

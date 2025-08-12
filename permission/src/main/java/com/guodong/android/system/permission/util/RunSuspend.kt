@@ -3,7 +3,11 @@ package com.guodong.android.system.permission.util
 /**
  * Created by john.wick on 2025/5/27
  */
-class RunSuspend<T> {
+internal class RunSuspend<T> {
+
+    internal companion object {
+        internal const val DEFAULT_AWAIT_TIMEOUT_DURATION = 3_000L
+    }
 
     private var result: T? = null
 
@@ -47,5 +51,3 @@ class RunSuspend<T> {
         @Suppress("UNCHECKED_CAST") return result as T
     }
 }
-
-const val DEFAULT_AWAIT_TIMEOUT_DURATION = 3_000L

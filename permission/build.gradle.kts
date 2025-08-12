@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.refin)
 }
 
 android {
@@ -48,5 +49,7 @@ dependencies {
     implementation(libs.kotlin.coroutines.core)
     implementation(libs.kotlin.coroutines.android)
 
-    compileOnly(project(":framework"))
+    implementation(libs.hidden.compat)
+    compileOnly(libs.hidden.stub)
+    // compileOnly(project(":framework"))
 }

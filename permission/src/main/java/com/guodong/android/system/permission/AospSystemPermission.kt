@@ -1,16 +1,19 @@
 package com.guodong.android.system.permission
 
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Build
-import android.os.PowerManager
 import android.os.SystemClock
+import android.os.UserHandleHidden
 import android.provider.Settings
 import android.util.Log
+import androidx.annotation.IntRange
 import androidx.annotation.Keep
-import androidx.core.content.getSystemService
+import androidx.annotation.RequiresApi
 import com.guodong.android.system.permission.android.adb.AdbCompat
+import com.guodong.android.system.permission.android.ethernet.EthernetCompat
 import com.guodong.android.system.permission.android.launcher.LauncherCompat
 import com.guodong.android.system.permission.android.ota.OTACompat
 import com.guodong.android.system.permission.android.pm.clear.ClearApplicationUserDataCompat
@@ -20,15 +23,18 @@ import com.guodong.android.system.permission.android.runtime.RuntimePermissionCo
 import com.guodong.android.system.permission.android.sceenshot.TakeScreenShotCompat
 import com.guodong.android.system.permission.android.screen.ScreenOffCompat
 import com.guodong.android.system.permission.android.sntp.SntpClientCompat
-import com.guodong.android.system.permission.annotation.Orientation
+import com.guodong.android.system.permission.annotation.Rotation
 import com.guodong.android.system.permission.domain.NetworkAddress
-import com.guodong.android.system.permission.util.ShellUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import rikka.hidden.compat.ActivityManagerApis
+import rikka.hidden.compat.AlarmManagerApis
+import rikka.hidden.compat.UiModeManagerApis
 import java.util.Calendar
 import java.util.TimeZone
 import java.util.concurrent.TimeUnit
 import kotlin.math.ceil
+import kotlin.math.floor
 
 /**
  * Created by john.wick on 2025/5/27
@@ -47,6 +53,11 @@ open class AospSystemPermission : ISystemPermission {
         this.context = context.applicationContext
     }
 
+    @Vendor
+    override fun getVendor(): String {
+        return Vendor.AOSP
+    }
+
     override fun getVersion(): String {
         return BuildConfig.VERSION_NAME
     }
@@ -58,30 +69,27 @@ open class AospSystemPermission : ISystemPermission {
         dns1: String,
         dns2: String,
     ): Boolean {
-        return false
+        return EthernetCompat.setStaticAddress(ipAddress, netmask, gateway, dns1, dns2)
     }
 
     override suspend fun setEthernetDhcpAddress(): Boolean {
-        return false
+        return EthernetCompat.setDhcpAddress()
     }
 
     override suspend fun getEthernetNetworkAddress(): NetworkAddress {
-        return NetworkAddress.UNASSIGNED
+        return EthernetCompat.getNetworkAddress()
     }
 
     override suspend fun getEthernetMacAddress(): String {
-        return ""
+        return EthernetCompat.getMacAddress()
     }
 
-    override fun reboot(): Boolean {
-        return try {
-            val manager = context.getSystemService<PowerManager>() ?: return false
-            manager.reboot("")
-            true
-        } catch (e: Exception) {
-            Log.e(TAG, "reboot: ${e.message}", e)
-            false
-        }
+    override fun reboot() {
+        PowerCompat.reboot()
+    }
+
+    override fun shutdown() {
+        PowerCompat.shutdown()
     }
 
     override fun factoryReset() {
@@ -90,6 +98,10 @@ open class AospSystemPermission : ISystemPermission {
 
     override fun grantRuntimePermission(packageName: String): Boolean {
         return RuntimePermissionCompat.grantRuntimePermission(context, packageName)
+    }
+
+    override fun getLauncher(): ComponentName? {
+        return LauncherCompat.getLauncher(context)
     }
 
     override fun setLauncher(packageName: String): Boolean {
@@ -120,10 +132,10 @@ open class AospSystemPermission : ISystemPermission {
         }
     }
 
-    override fun setScreenBright(level: Int) {
+    override fun setScreenBrightness(level: Int) {
         enableAutoBrightness(false)
 
-        val brightness = ceil(level * 1F / 100 * 255).toInt()
+        val brightness = floor(level * 1F / 100 * 255).toInt().coerceIn(1, 255)
 
         Settings.System.putInt(
             context.contentResolver,
@@ -132,13 +144,13 @@ open class AospSystemPermission : ISystemPermission {
         )
     }
 
-    override fun getScreenBright(): Int {
+    override fun getScreenBrightness(): Int {
         val brightness = Settings.System.getInt(
             context.contentResolver,
             Settings.System.SCREEN_BRIGHTNESS,
             75
         )
-        return ceil(brightness * 100F / 255).toInt()
+        return ceil(brightness * 100F / 255).toInt().coerceIn(1, 100)
     }
 
     override fun enableAutoBrightness(enable: Boolean): Boolean {
@@ -175,6 +187,16 @@ open class AospSystemPermission : ISystemPermission {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.R)
+    override fun enableDarkUI(enable: Boolean): Boolean {
+        return UiModeManagerApis.setNightModeActivatedNoThrow(enable)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.R)
+    override fun isDarkUIEnabled(): Boolean {
+        return UiModeManagerApis.isNightModeActivated()
+    }
+
     override fun enableScreenNeverOff(enable: Boolean) {
         ScreenOffCompat.enableScreenNeverOff(context, enable)
     }
@@ -184,11 +206,43 @@ open class AospSystemPermission : ISystemPermission {
     }
 
     override fun setScreenOn() {
-        PowerCompat.wakeUp(context)
+        PowerCompat.wakeUp()
     }
 
     override fun setScreenOff() {
-        PowerCompat.goToSleep(context)
+        PowerCompat.goToSleep()
+    }
+
+    override fun enableAutoScreenRotation(enable: Boolean) {
+        Settings.System.putInt(
+            context.contentResolver,
+            Settings.System.ACCELEROMETER_ROTATION,
+            if (enable) 1 else 0
+        )
+    }
+
+    override fun isAutoScreenRotationEnabled(): Boolean {
+        return Settings.System.getInt(
+            context.contentResolver,
+            Settings.System.ACCELEROMETER_ROTATION,
+            0
+        ) == 1
+    }
+
+    override fun setScreenRotation(@Rotation rotation: Int) {
+        if (isAutoScreenRotationEnabled()) {
+            enableAutoScreenRotation(false)
+        }
+        Settings.System.putInt(context.contentResolver, Settings.System.USER_ROTATION, rotation)
+    }
+
+    @Rotation
+    override fun getScreenRotation(): Int {
+        return Settings.System.getInt(
+            context.contentResolver,
+            Settings.System.USER_ROTATION,
+            Rotation.ROTATION_0
+        )
     }
 
     override fun enableAdb(enable: Boolean) {
@@ -199,14 +253,27 @@ open class AospSystemPermission : ISystemPermission {
         return AdbCompat.isAdbEnabled(context)
     }
 
-    override fun hideSystemBar(): Boolean {
+    override fun setAdbPort(@IntRange(from = 5000, to = 65535) port: Int) {
+        AdbCompat.setAdbPort(port)
+    }
+
+    @IntRange(from = 5000, to = 65535)
+    override fun getAdbPort(): Int {
+        return AdbCompat.getAdbPort()
+    }
+
+    override fun enableSystemBar(enable: Boolean) {
+        // AOSP not support
+    }
+
+    override fun isSystemBarEnabled(): Boolean {
         // AOSP not supported
         return false
     }
 
-    override fun showSystemBar(): Boolean {
-        // AOSP not supported
-        return false
+    override suspend fun setTimeZone(timeZone: String): Boolean {
+        Settings.Global.putInt(context.contentResolver, Settings.Global.AUTO_TIME_ZONE, 0)
+        return AlarmManagerApis.setTimeZoneNoThrow(timeZone)
     }
 
     override suspend fun setDate(year: Int, month: Int, day: Int): Boolean {
@@ -217,6 +284,8 @@ open class AospSystemPermission : ISystemPermission {
         }
 
         val timeInMillis = calendar.timeInMillis
+
+        Settings.Global.putInt(context.contentResolver, Settings.Global.AUTO_TIME, 0)
         return SystemClock.setCurrentTimeMillis(timeInMillis)
     }
 
@@ -228,18 +297,23 @@ open class AospSystemPermission : ISystemPermission {
         }
 
         val timeInMillis = calendar.timeInMillis
+
+        Settings.Global.putInt(context.contentResolver, Settings.Global.AUTO_TIME, 0)
         return SystemClock.setCurrentTimeMillis(timeInMillis)
     }
 
-    override fun setOrientation(angle: Int) {
-        val rotation = when (angle) {
-            Orientation.ORIENTATION_90 -> 1
-            Orientation.ORIENTATION_180 -> 2
-            Orientation.ORIENTATION_270 -> 3
-            else -> 0
-        }
+    override suspend fun enableTimeFormat24H(enable: Boolean): Boolean {
+        return Settings.System.putString(
+            context.contentResolver,
+            Settings.System.TIME_12_24,
+            if (enable) "24" else "12"
+        )
+    }
 
-        ShellUtil.execCmd("settings put system user_roration $rotation")
+    override suspend fun isTimeFormat24HEnabled(): Boolean {
+        val time24 = Settings.System.getString(context.contentResolver, Settings.System.TIME_12_24)
+            ?: return false
+        return "24" == time24
     }
 
     override fun clearApplicationUserData(
@@ -255,6 +329,14 @@ open class AospSystemPermission : ISystemPermission {
 
     override fun uninstallPackage(packageName: String, observer: IPackageDeleteObserver) {
         PackageInstallerCompat.uninstallPackage(context, packageName, observer)
+    }
+
+    override fun killBackgroundProcesses(packageName: String) {
+        ActivityManagerApis.killBackgroundProcessesNoThrow(packageName, UserHandleHidden.myUserId())
+    }
+
+    override fun forceStopPackage(packageName: String) {
+        ActivityManagerApis.forceStopPackageNoThrow(packageName, UserHandleHidden.myUserId())
     }
 
     override fun installOTAPackage(otaFilePath: String, observer: IOTAPackageInstallObserver) {
