@@ -80,6 +80,33 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/grant_runtime_permission" />
+
+        <View
+            android:id="@+id/battery_optimizations_divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="#33333333"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <Button
+            android:id="@+id/btn_open_battery_optimizations"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/open_battery_optimizations"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/ms_device_idle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/ignoring_battery_optimizations"
+            android:visibility="gone"
+            tools:visibility="visible" />
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>

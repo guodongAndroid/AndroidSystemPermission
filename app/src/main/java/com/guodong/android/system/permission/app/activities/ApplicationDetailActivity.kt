@@ -2,14 +2,18 @@ package com.guodong.android.system.permission.app.activities
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isVisible
 import com.guodong.android.system.permission.SystemPermissionCompat
 import com.guodong.android.system.permission.app.BaseActivity
 import com.guodong.android.system.permission.app.databinding.ActivityApplicationDetailBinding
 import com.guodong.android.system.permission.app.getApplicationModel
+import com.guodong.android.system.permission.app.model.ApplicationModel
 import com.guodong.android.system.permission.app.openApplicationDetailsSettings
+import com.guodong.android.system.permission.app.openBatteryOptimizationsSettings
 
 /**
  * Created by guodongAndroid on 2025/8/15
@@ -27,6 +31,8 @@ class ApplicationDetailActivity : BaseActivity<ActivityApplicationDetailBinding>
         }
     }
 
+    private lateinit var applicationModel: ApplicationModel
+
     override fun getViewBinding(): ActivityApplicationDetailBinding {
         return ActivityApplicationDetailBinding.inflate(LayoutInflater.from(this))
     }
@@ -43,6 +49,8 @@ class ApplicationDetailActivity : BaseActivity<ActivityApplicationDetailBinding>
             finish()
             return
         }
+
+        applicationModel = model
 
         binding.ivAppIcon.setImageDrawable(model.icon)
         binding.tvAppName.text = model.name
@@ -145,6 +153,37 @@ class ApplicationDetailActivity : BaseActivity<ActivityApplicationDetailBinding>
                     dialog.dismiss()
                 }
                 .show()
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            batteryOptimizationsDivider.isVisible = true
+            btnOpenBatteryOptimizations.isVisible = true
+            msDeviceIdle.isVisible = true
+
+            btnOpenBatteryOptimizations.setOnClickListener {
+                openBatteryOptimizationsSettings()
+            }
+
+            msDeviceIdle.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    SystemPermissionCompat.addToPermanentPowerSaveAllowList(packageName)
+                } else {
+                    SystemPermissionCompat.removeToPermanentPowerSaveAllowList(packageName)
+                }
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        binding.refreshDeviceIdleUI()
+    }
+
+    private fun ActivityApplicationDetailBinding.refreshDeviceIdleUI() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            msDeviceIdle.isChecked =
+                SystemPermissionCompat.isPowerSaveWhitelistApp(applicationModel.packageName)
         }
     }
 }

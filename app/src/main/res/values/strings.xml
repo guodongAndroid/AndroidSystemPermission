@@ -86,4 +86,6 @@
     <string name="hint_please_type_ntp_server">please type ntp server</string>
     <string name="placeholder_ntp_aliyun_com">ntp.aliyun.com</string>
     <string name="got_ntp_time">获取的Ntp Time: %s</string>
+    <string name="ignoring_battery_optimizations">Ignoring Battery Optimizations</string>
+    <string name="open_battery_optimizations">Open Battery Optimizations</string>
 </resources>

@@ -300,4 +300,22 @@ interface ISystemPermission {
         timeout: Long,
         timeUnit: TimeUnit,
     ): Long
+
+    /**
+     * 将[packageName]添加进永久省电白名单
+     */
+    @RequiresApi(Build.VERSION_CODES.M)
+    fun addToPermanentPowerSaveAllowList(packageName: String)
+
+    /**
+     * 将[packageName]从永久省电白名单中移除
+     */
+    @RequiresApi(Build.VERSION_CODES.M)
+    fun removeToPermanentPowerSaveAllowList(packageName: String)
+
+    /**
+     * [packageName]是否是省电白名单应用程序
+     */
+    @RequiresApi(Build.VERSION_CODES.M)
+    fun isPowerSaveWhitelistApp(packageName: String): Boolean
 }

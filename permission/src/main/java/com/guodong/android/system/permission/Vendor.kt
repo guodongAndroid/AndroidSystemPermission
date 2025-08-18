@@ -6,6 +6,7 @@ import androidx.annotation.StringDef
 /**
  * Created by guodongAndroid on 2025/8/14
  */
+@MustBeDocumented
 @StringDef(
     Vendor.AOSP,
     Vendor.HIKVISION,

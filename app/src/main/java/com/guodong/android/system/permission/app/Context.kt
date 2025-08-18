@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
+import androidx.annotation.RequiresApi
 import com.guodong.android.system.permission.app.model.ApplicationModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -84,6 +85,13 @@ fun Context.openApplicationDetailsSettings(packageName: String) {
 
 fun Context.openDateSettings() {
     val intent = Intent(Settings.ACTION_DATE_SETTINGS)
+        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    startActivity(intent)
+}
+
+@RequiresApi(Build.VERSION_CODES.M)
+fun Context.openBatteryOptimizationsSettings() {
+    val intent = Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS)
         .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
     startActivity(intent)
 }

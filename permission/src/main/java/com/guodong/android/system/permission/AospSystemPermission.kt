@@ -29,6 +29,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import rikka.hidden.compat.ActivityManagerApis
 import rikka.hidden.compat.AlarmManagerApis
+import rikka.hidden.compat.DeviceIdleControllerApis
 import rikka.hidden.compat.UiModeManagerApis
 import java.util.Calendar
 import java.util.TimeZone
@@ -364,5 +365,20 @@ open class AospSystemPermission : ISystemPermission {
         return withContext(Dispatchers.Default) {
             SntpClientCompat.getNtpTime(context, ntpServer, ntpPort, timeout, timeUnit)
         }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    override fun addToPermanentPowerSaveAllowList(packageName: String) {
+        DeviceIdleControllerApis.addPowerSaveWhitelistAppNoThrow(packageName)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    override fun removeToPermanentPowerSaveAllowList(packageName: String) {
+        DeviceIdleControllerApis.removePowerSaveWhitelistAppNoThrow(packageName)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    override fun isPowerSaveWhitelistApp(packageName: String): Boolean {
+        return DeviceIdleControllerApis.isPowerSaveWhitelistAppNoThrow(packageName)
     }
 }

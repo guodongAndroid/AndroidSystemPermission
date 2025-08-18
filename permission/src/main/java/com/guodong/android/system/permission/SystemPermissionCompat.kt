@@ -254,4 +254,19 @@ object SystemPermissionCompat : ISystemPermission {
     ): Long {
         return delegate.getNtpTime(ntpServer, ntpPort, timeout, timeUnit)
     }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    override fun addToPermanentPowerSaveAllowList(packageName: String) {
+        delegate.addToPermanentPowerSaveAllowList(packageName)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    override fun removeToPermanentPowerSaveAllowList(packageName: String) {
+        delegate.removeToPermanentPowerSaveAllowList(packageName)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    override fun isPowerSaveWhitelistApp(packageName: String): Boolean {
+        return delegate.isPowerSaveWhitelistApp(packageName)
+    }
 }
