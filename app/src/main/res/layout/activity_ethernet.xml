@@ -17,6 +17,22 @@
             app:layout_constraintGuide_percent="0.5" />
 
         <TextView
+            android:id="@+id/tv_ethernet_enable_label"
+            style="@style/EthernetTextLabelStyle"
+            android:text="@string/ethernet_enable"
+            app:layout_constraintBottom_toBottomOf="@id/ms_ethernet"
+            app:layout_constraintEnd_toStartOf="@id/gl_vertical_0.5"
+            app:layout_constraintTop_toTopOf="@id/ms_ethernet" />
+
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/ms_ethernet"
+            style="@style/EthernetTextInputLayoutStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/gl_vertical_0.5"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
             android:id="@+id/tv_ethernet_mode_label"
             style="@style/EthernetTextLabelStyle"
             android:text="@string/ethernet_mode"
@@ -30,7 +46,7 @@
             app:layout_constraintBottom_toTopOf="@id/layout_ethernet_ip"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/gl_vertical_0.5"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/ms_ethernet" />
 
         <TextView
             android:id="@+id/tv_ethernet_ip_label"
@@ -52,7 +68,11 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_ethernet_ip"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:digits="0123456789."
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLines="1" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -76,7 +96,11 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_ethernet_netmask"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:digits="0123456789."
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLines="1" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -100,7 +124,11 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_ethernet_gateway"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:digits="0123456789."
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLines="1" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -124,7 +152,11 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_ethernet_dns1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:digits="0123456789."
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLines="1" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -148,7 +180,11 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_ethernet_dns2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:digits="0123456789."
+                android:imeOptions="actionDone"
+                android:inputType="number"
+                android:maxLines="1" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -168,13 +204,23 @@
             app:layout_constraintTop_toBottomOf="@id/layout_ethernet_dns2" />
 
         <Button
+            android:id="@+id/btn_open_ethernet_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:text="@string/open_ethernet_settings"
+            app:layout_constraintEnd_toStartOf="@id/btn_get_ethernet"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_ethernet_mac_label" />
+
+        <Button
             android:id="@+id/btn_get_ethernet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="80dp"
             android:text="@string/ethernet_get"
             app:layout_constraintEnd_toStartOf="@id/btn_set_static"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_open_ethernet_settings"
             app:layout_constraintTop_toBottomOf="@id/tv_ethernet_mac_label" />
 
         <Button

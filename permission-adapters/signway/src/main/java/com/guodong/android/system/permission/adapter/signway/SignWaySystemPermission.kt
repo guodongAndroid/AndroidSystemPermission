@@ -3,8 +3,8 @@ package com.guodong.android.system.permission.adapter.signway
 import android.content.Intent
 import android.os.SystemProperties
 import androidx.annotation.Keep
-import com.guodong.android.system.permission.AospSystemPermission
-import com.guodong.android.system.permission.Vendor
+import com.guodong.android.system.permission.adapter.aosp.AospSystemPermission
+import com.guodong.android.system.permission.api.Vendor
 
 /**
  * Created by guodongAndroid on 2025/8/18

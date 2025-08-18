@@ -27,6 +27,10 @@ android {
         }
     }
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -44,6 +48,5 @@ dependencies {
 
     implementation(libs.hidden.compat)
     compileOnly(libs.hidden.stub)
-
-    api(project(":permission"))
+    api(project(":permission-adapters:aosp"))
 }

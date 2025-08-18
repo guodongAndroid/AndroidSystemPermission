@@ -2,8 +2,8 @@ package com.guodong.android.system.permission.app
 
 import android.app.Application
 import android.util.Log
-import com.guodong.android.system.permission.SystemPermissionCompat
 import com.guodong.android.system.permission.adapter.dwin.DWinSystemPermission
+import com.guodong.android.system.permission.api.SystemPermissionCompat
 
 /**
  * Created by john.wick on 2025/7/1

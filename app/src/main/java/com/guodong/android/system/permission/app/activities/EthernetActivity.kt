@@ -3,25 +3,29 @@ package com.guodong.android.system.permission.app.activities
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
+import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
-import com.guodong.android.system.permission.SystemPermissionCompat
-import com.guodong.android.system.permission.android.util.isNetMask
+import com.guodong.android.system.permission.api.SystemPermissionCompat
+import com.guodong.android.system.permission.api.domain.NetworkAddress
+import com.guodong.android.system.permission.api.util.isNetMask
 import com.guodong.android.system.permission.app.BaseActivity
+import com.guodong.android.system.permission.app.OnCheckedChangeListener
+import com.guodong.android.system.permission.app.OnCheckedChangeListenerWrapper
 import com.guodong.android.system.permission.app.R
 import com.guodong.android.system.permission.app.databinding.ActivityEthernetBinding
 import com.guodong.android.system.permission.app.isErrorState
 import com.guodong.android.system.permission.app.isGateway
 import com.guodong.android.system.permission.app.isIP
-import com.guodong.android.system.permission.domain.NetworkAddress
+import com.guodong.android.system.permission.app.openEthernetSettings
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 /**
  * Created by john.wick on 2025/8/5
  */
-class EthernetActivity : BaseActivity<ActivityEthernetBinding>() {
+class EthernetActivity : BaseActivity<ActivityEthernetBinding>(), OnCheckedChangeListener {
 
     companion object {
         fun start(context: Context) {
@@ -29,12 +33,22 @@ class EthernetActivity : BaseActivity<ActivityEthernetBinding>() {
         }
     }
 
+    private lateinit var ethernetCheckedChangeListener: OnCheckedChangeListenerWrapper
+
     override fun getViewBinding(): ActivityEthernetBinding {
         return ActivityEthernetBinding.inflate(LayoutInflater.from(this))
     }
 
     override fun ActivityEthernetBinding.initViews() {
         initTextChangeListener()
+
+        ethernetCheckedChangeListener =
+            OnCheckedChangeListenerWrapper(binding.msEthernet, this@EthernetActivity)
+        binding.msEthernet.setOnCheckedChangeListener(ethernetCheckedChangeListener)
+
+        binding.btnOpenEthernetSettings.setOnClickListener {
+            openEthernetSettings()
+        }
 
         binding.btnGetEthernet.setOnClickListener {
             lifecycleScope.launch { refreshEthernetUI() }
@@ -101,6 +115,19 @@ class EthernetActivity : BaseActivity<ActivityEthernetBinding>() {
         lifecycleScope.launch { binding.refreshEthernetUI() }
     }
 
+    override fun onCheckedChanged(
+        buttonView: CompoundButton,
+        isChecked: Boolean,
+        fromUser: Boolean
+    ) {
+        if (fromUser) {
+            lifecycleScope.launch { SystemPermissionCompat.enableEthernet(isChecked) }
+        }
+
+        binding.enabledEditText(isChecked)
+        binding.enabledBtn(isChecked)
+    }
+
     private fun initTextChangeListener() {
         binding.etEthernetIp.doAfterTextChanged {
             val error = if (it.isNullOrEmpty() || !it.isIP()) {
@@ -156,6 +183,8 @@ class EthernetActivity : BaseActivity<ActivityEthernetBinding>() {
     }
 
     private suspend fun ActivityEthernetBinding.refreshEthernetUI() {
+        ethernetCheckedChangeListener.setChecked(SystemPermissionCompat.isEthernetEnabled())
+
         val address = getEthernetNetworkAddress()
         val mode = when (address.ipAssignment) {
             NetworkAddress.IpAssignment.STATIC -> {
@@ -191,6 +220,12 @@ class EthernetActivity : BaseActivity<ActivityEthernetBinding>() {
         etEthernetGateway.isEnabled = enable
         etEthernetDns1.isEnabled = enable
         etEthernetDns2.isEnabled = enable
+    }
+
+    private fun ActivityEthernetBinding.enabledBtn(enable: Boolean) {
+        btnGetEthernet.isEnabled = enable
+        btnSetStatic.isEnabled = enable
+        btnSetDhcp.isEnabled = enable
     }
 
     private suspend fun getEthernetNetworkAddress(): NetworkAddress {

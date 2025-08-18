@@ -11,7 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
-import com.guodong.android.system.permission.SystemPermissionCompat
+import com.guodong.android.system.permission.api.SystemPermissionCompat
 import com.guodong.android.system.permission.app.BaseActivity
 import com.guodong.android.system.permission.app.R
 import com.guodong.android.system.permission.app.adapter.TimeZoneAdapter

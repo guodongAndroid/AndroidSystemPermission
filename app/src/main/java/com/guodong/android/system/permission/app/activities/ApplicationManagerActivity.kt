@@ -1,5 +1,6 @@
 package com.guodong.android.system.permission.app.activities
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -9,7 +10,7 @@ import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
-import com.guodong.android.system.permission.SystemPermissionCompat
+import com.guodong.android.system.permission.api.SystemPermissionCompat
 import com.guodong.android.system.permission.app.BaseActivity
 import com.guodong.android.system.permission.app.R
 import com.guodong.android.system.permission.app.adapter.ApplicationAdapter
@@ -22,6 +23,7 @@ import me.rosuh.filepicker.config.FilePickerManager
 /**
  * Created by guodongAndroid on 2025/8/15
  */
+@SuppressLint("LongLogTag")
 class ApplicationManagerActivity : BaseActivity<ActivityApplicationManagerBinding>(),
     OnRefreshListener {
 

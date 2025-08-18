@@ -5,7 +5,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
-import com.guodong.android.system.permission.SystemPermissionCompat
+import com.guodong.android.system.permission.api.SystemPermissionCompat
 import com.guodong.android.system.permission.app.BaseActivity
 import com.guodong.android.system.permission.app.R
 import com.guodong.android.system.permission.app.databinding.ActivityLauncherSettingsBinding

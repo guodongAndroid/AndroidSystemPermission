@@ -10,8 +10,15 @@ targetSdk = "36"
 versionCode = "1"
 versionName = "1.0.0"
 
+mavenPublish = "0.34.0"
+
+persmission = "1.0.0"
+
+# https://central.sonatype.com/artifact/com.sunxiaodou.android/system-permission-aar-hikvision
+permissionAarHikvision = "1.0.0"
+
 # region https://github.com/guodongAndroid/HiddenApi.git
-hidden-api = "1.0.0"
+hidden-api = "1.0.1"
 # endregion
 
 # region https://github.com/guodongAndroid/HiddenApiRefinePlugin.git
@@ -72,10 +79,17 @@ refine-runtime = { group = "dev.rikka.tools.refine", name = "runtime", version.r
 refine-annotation = { group = "dev.rikka.tools.refine", name = "annotation", version.ref = "refine" }
 refine-annotation-processor = { group = "dev.rikka.tools.refine", name = "annotation-processor", version.ref = "refine" }
 
+permission-adapter-aosp = { group = "com.sunxiaodou.android", name = "system-permission-adapter-aosp", version.ref = "persmission" }
+permission-adapter-dwin = { group = "com.sunxiaodou.android", name = "system-permission-adapter-dwin", version.ref = "persmission" }
+permission-adapter-hikvision = { group = "com.sunxiaodou.android", name = "system-permission-adapter-hikvision", version.ref = "persmission" }
+permission-adapter-signway = { group = "com.sunxiaodou.android", name = "system-permission-adapter-signway", version.ref = "persmission" }
+permission-aar-hikvision = { group = "com.sunxiaodou.android", name = "system-permission-aar-hikvision", version.ref = "permissionAarHikvision" }
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 refin = { id = "dev.rikka.tools.refine", version.ref = "refine" }
+maven-publish = { id = "com.vanniktech.maven.publish", version.ref = "mavenPublish" }
 

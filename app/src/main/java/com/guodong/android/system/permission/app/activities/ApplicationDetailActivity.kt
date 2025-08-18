@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
-import com.guodong.android.system.permission.SystemPermissionCompat
+import com.guodong.android.system.permission.api.SystemPermissionCompat
 import com.guodong.android.system.permission.app.BaseActivity
 import com.guodong.android.system.permission.app.databinding.ActivityApplicationDetailBinding
 import com.guodong.android.system.permission.app.getApplicationModel

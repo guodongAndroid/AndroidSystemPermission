@@ -4,8 +4,9 @@ import android.os.Build
 import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
-import com.guodong.android.system.permission.SystemPermissionCompat
-import com.guodong.android.system.permission.Vendor
+import com.guodong.android.system.permission.api.BuildConfig
+import com.guodong.android.system.permission.api.SystemPermissionCompat
+import com.guodong.android.system.permission.api.Vendor
 import com.guodong.android.system.permission.app.activities.AdbActivity
 import com.guodong.android.system.permission.app.activities.ApplicationManagerActivity
 import com.guodong.android.system.permission.app.activities.DeviceActivity
@@ -30,7 +31,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         val osVersion =
             "Android ${Build.VERSION.RELEASE}(${Build.VERSION.CODENAME}) / API ${Build.VERSION.SDK_INT}"
         binding.tvOsVersion.text = getString(R.string.os_version, osVersion)
-        binding.tvAppVersion.text = getString(R.string.app_version, getVersionName(packageName))
+        binding.tvAppVersion.text = getString(
+            R.string.app_version,
+            getVersionName(packageName),
+            if (BuildConfig.DEBUG) "Debug" else "Release"
+        )
 
         binding.tvSdkVersion.text =
             getString(R.string.sdk_version, SystemPermissionCompat.getVersion())

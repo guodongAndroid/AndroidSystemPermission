@@ -36,7 +36,12 @@ android {
     }
 
     buildTypes {
+        debug {
+            signingConfig = signingConfigs["debug"]
+        }
+
         release {
+            signingConfig = signingConfigs["release"]
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -50,52 +55,24 @@ android {
         buildConfig = true
     }
 
-    flavorDimensions += listOf("vendor")
+    flavorDimensions += "vendor"
+    val vendors = listOf("aosp", "hikvision", "dwin", "signway")
     productFlavors {
-        create("aosp") {
-            applicationIdSuffix = ".aosp"
-            versionNameSuffix = "-aosp"
-            dimension = "vendor"
-            resValue("string", "app_name", "AndroidSystemPermissionApp-aosp")
-        }
-
-        create("hikvision") {
-            applicationIdSuffix = ".hikvision"
-            versionNameSuffix = "-hikvision"
-            dimension = "vendor"
-            resValue("string", "app_name", "AndroidSystemPermissionApp-hikvision")
-        }
-
-        create("dwin") {
-            applicationIdSuffix = ".dwin"
-            versionNameSuffix = "-dwin"
-            dimension = "vendor"
-            resValue("string", "app_name", "AndroidSystemPermissionApp-dwin")
-        }
-
-        create("signway") {
-            applicationIdSuffix = ".signway"
-            versionNameSuffix = "-signway"
-            dimension = "vendor"
-            resValue("string", "app_name", "AndroidSystemPermissionApp-signway")
+        vendors.forEach { vendor ->
+            create(vendor) {
+                applicationIdSuffix = ".$vendor"
+                versionNameSuffix = "-$vendor"
+                dimension = "vendor"
+                resValue("string", "app_name", "AndroidSystemPermissionApp-$vendor")
+            }
         }
     }
 
     sourceSets {
-        getByName("aosp") {
-            java.srcDirs("src/aosp/java")
-        }
-
-        getByName("hikvision") {
-            java.srcDirs("src/hikvision/java")
-        }
-
-        getByName("dwin") {
-            java.srcDirs("src/dwin/java")
-        }
-
-        getByName("signway") {
-            java.srcDirs("src/signway/java")
+        vendors.forEach { vendor ->
+            getByName(vendor) {
+                java.srcDirs("src/$vendor/java")
+            }
         }
     }
 
@@ -106,6 +83,22 @@ android {
 
     kotlinOptions {
         jvmTarget = JvmTarget.JVM_11.target
+    }
+}
+
+androidComponents {
+    onVariants { variant ->
+        val name = variant.name
+        when (name) {
+            "aospDebug" -> dependencies.add("aospDebugImplementation", dependencies.project(":permission-adapters:aosp"))
+            "aospRelease" -> dependencies.add("aospReleaseImplementation", libs.permission.adapter.aosp)
+            "hikvisionDebug" -> dependencies.add("hikvisionDebugImplementation", dependencies.project(":permission-adapters:hikvision"))
+            "hikvisionRelease" -> dependencies.add("hikvisionReleaseImplementation", libs.permission.adapter.hikvision)
+            "dwinDebug" -> dependencies.add("dwinDebugImplementation", dependencies.project(":permission-adapters:dwin"))
+            "dwinRelease" -> dependencies.add("dwinReleaseImplementation", libs.permission.adapter.dwin)
+            "signwayDebug" -> dependencies.add("signwayDebugImplementation", dependencies.project(":permission-adapters:signway"))
+            "signwayRelease" -> dependencies.add("signwayReleaseImplementation", libs.permission.adapter.signway)
+        }
     }
 }
 
@@ -126,11 +119,6 @@ dependencies {
     implementation(libs.kotlin.coroutines.android)
 
     implementation(libs.file.picker)
-
-    add("aospImplementation", project(":permission"))
-    add("hikvisionImplementation", project(":permission-adapters:hikvision"))
-    add("dwinImplementation", project(":permission-adapters:dwin"))
-    add("signwayImplementation", project(":permission-adapters:signway"))
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

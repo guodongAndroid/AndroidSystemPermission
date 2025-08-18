@@ -48,10 +48,10 @@ dependencies {
 
     implementation(libs.hidden.compat)
     compileOnly(libs.hidden.stub)
+    api(project(":permission-adapters:aosp"))
 
-    api(project(":permission"))
-
-    implementation(project(":permission-aars:hikvision"))
+    debugImplementation(project(":permission-aars:hikvision"))
+    releaseImplementation(libs.permission.aar.hikvision)
     implementation(libs.gson)
     implementation(libs.xstream) {
         exclude(group = "xmlpull", module = "xmlpull")

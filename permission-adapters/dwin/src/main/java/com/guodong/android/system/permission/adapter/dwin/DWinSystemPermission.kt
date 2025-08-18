@@ -5,8 +5,8 @@ import android.os.SystemProperties
 import android.provider.Settings
 import android.view.SurfaceControlHidden
 import androidx.annotation.Keep
-import com.guodong.android.system.permission.AospSystemPermission
-import com.guodong.android.system.permission.Vendor
+import com.guodong.android.system.permission.adapter.aosp.AospSystemPermission
+import com.guodong.android.system.permission.api.Vendor
 import rikka.hidden.compat.SurfaceControlApis
 
 /**

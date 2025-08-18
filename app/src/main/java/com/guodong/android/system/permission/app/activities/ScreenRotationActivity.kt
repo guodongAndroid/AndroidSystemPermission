@@ -4,8 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.view.LayoutInflater
-import com.guodong.android.system.permission.SystemPermissionCompat
-import com.guodong.android.system.permission.annotation.Rotation
+import com.guodong.android.system.permission.api.SystemPermissionCompat
+import com.guodong.android.system.permission.api.annotation.Rotation
 import com.guodong.android.system.permission.app.BaseActivity
 import com.guodong.android.system.permission.app.R
 import com.guodong.android.system.permission.app.databinding.ActivityScreenRotationBinding
@@ -32,7 +32,7 @@ class ScreenRotationActivity : BaseActivity<ActivityScreenRotationBinding>() {
         }
 
         msAutoRotation.setOnCheckedChangeListener { _, isChecked ->
-            SystemPermissionCompat.enableAutoScreenRotation(isChecked)
+            SystemPermissionCompat.enableScreenAutoRotation(isChecked)
             refreshRotationTVUI()
             refreshRotationBtnStateUI()
         }
@@ -71,7 +71,7 @@ class ScreenRotationActivity : BaseActivity<ActivityScreenRotationBinding>() {
     }
 
     private fun ActivityScreenRotationBinding.refreshSwitchUI() {
-        msAutoRotation.isChecked = SystemPermissionCompat.isAutoScreenRotationEnabled()
+        msAutoRotation.isChecked = SystemPermissionCompat.isScreenAutoRotationEnabled()
     }
 
     private fun ActivityScreenRotationBinding.refreshRotationTVUI() {

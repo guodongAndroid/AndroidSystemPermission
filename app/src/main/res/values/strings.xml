@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="os_version">Os版本：%s</string>
-    <string name="app_version">App版本：%s</string>
+    <string name="app_version">App版本：%s-%s</string>
     <string name="sdk_version">SDK版本：%s</string>
     <string name="firmware_version">固件版本：%s</string>
     <string name="ethernet">Ethernet</string>
@@ -15,6 +15,7 @@
     <string name="screen_shot">Screenshot</string>
     <string name="ntp_time">NTP Time</string>
 
+    <string name="ethernet_enable">以太网状态：</string>
     <string name="ethernet_mode">IP分配模式：</string>
     <string name="ethernet_mode_static">STATIC</string>
     <string name="ethernet_mode_dhcp">DHCP</string>
@@ -90,4 +91,5 @@
     <string name="got_ntp_time">获取的Ntp Time: %s</string>
     <string name="ignoring_battery_optimizations">Ignoring Battery Optimizations</string>
     <string name="open_battery_optimizations">Open Battery Optimizations</string>
+    <string name="open_ethernet_settings">Open Ethernet Settings</string>
 </resources>

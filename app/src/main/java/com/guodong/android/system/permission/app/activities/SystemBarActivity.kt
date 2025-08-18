@@ -3,7 +3,7 @@ package com.guodong.android.system.permission.app.activities
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
-import com.guodong.android.system.permission.SystemPermissionCompat
+import com.guodong.android.system.permission.api.SystemPermissionCompat
 import com.guodong.android.system.permission.app.BaseActivity
 import com.guodong.android.system.permission.app.databinding.ActivitySystemBarBinding
 import com.guodong.android.system.permission.app.openDisplaySettings

@@ -95,3 +95,9 @@ fun Context.openBatteryOptimizationsSettings() {
         .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
     startActivity(intent)
 }
+
+fun Context.openEthernetSettings() {
+    val intent = Intent(Settings.ACTION_WIRELESS_SETTINGS)
+        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    startActivity(intent)
+}

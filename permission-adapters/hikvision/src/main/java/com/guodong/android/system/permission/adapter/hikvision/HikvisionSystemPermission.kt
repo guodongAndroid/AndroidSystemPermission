@@ -1,5 +1,6 @@
 package com.guodong.android.system.permission.adapter.hikvision
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -7,13 +8,14 @@ import android.os.SystemProperties
 import android.provider.Settings
 import android.util.Log
 import androidx.annotation.Keep
-import com.guodong.android.system.permission.AospSystemPermission
-import com.guodong.android.system.permission.Vendor
-import com.guodong.android.system.permission.domain.NetworkAddress
+import com.guodong.android.system.permission.adapter.aosp.AospSystemPermission
+import com.guodong.android.system.permission.api.Vendor
+import com.guodong.android.system.permission.api.domain.NetworkAddress
 import com.hik.vis.module_base.IHikCallback
 import com.hik.vis.module_base.beans.ResponseStatus
 import com.hik.vis.module_base.constant.FactoryResetMode
 import com.hik.vis.module_sdk.IHikManager
+import com.hik.vis.module_sdk.constant.DeviceType
 import com.hik.vis.module_sdk.constant.IHikConfig
 import com.hik.vis.module_system.beans.response.DeviceInfo
 import com.hik.vis.module_system.beans.response.IpAddress
@@ -27,6 +29,7 @@ import kotlin.coroutines.suspendCoroutine
  * Created by john.wick on 2025/7/2
  */
 @Keep
+@SuppressLint("LongLogTag")
 class HikvisionSystemPermission : AospSystemPermission() {
 
     @Suppress("SpellCheckingInspection")
@@ -51,6 +54,7 @@ class HikvisionSystemPermission : AospSystemPermission() {
         SystemProperties.set(KEY_LOG_LEVEL, LogLevel.DEBUG)
 
         val config = IHikConfig.createConfig(context.applicationContext)
+            .setDeviceType(DeviceType.MEDICAL)
             .setClientName(TAG)
         IHikManager.init(config)
         system = IHikManager.getSystemManager()
@@ -155,7 +159,15 @@ class HikvisionSystemPermission : AospSystemPermission() {
     override fun setScreenBrightness(level: Int) {
         val levelTemp = level.coerceIn(1, 100)
         if (levelTemp != getScreenBrightness()) {
-            system.setScreenBright(levelTemp, null)
+            system.setScreenBright(levelTemp, object : IHikCallback<String>() {
+                override fun onSuccess(data: String?) {
+                    Log.d(TAG, "setScreenBrightness onSuccess: $data")
+                }
+
+                override fun onFailure(responseStatus: ResponseStatus?) {
+                    Log.e(TAG, "setScreenBrightness onFailure: $responseStatus")
+                }
+            })
         }
     }
 
@@ -172,8 +184,15 @@ class HikvisionSystemPermission : AospSystemPermission() {
     }
 
     override fun enableAdb(enable: Boolean) {
-        system.setAdb(enable, null)
-        super.enableAdb(enable)
+        system.setAdb(enable, object : IHikCallback<String>() {
+            override fun onSuccess(data: String?) {
+                Log.d(TAG, "enableAdb($enable) onSuccess: $data")
+            }
+
+            override fun onFailure(responseStatus: ResponseStatus?) {
+                Log.e(TAG, "enableAdb($enable) onFailure: $responseStatus")
+            }
+        })
     }
 
     override fun isAdbEnabled(): Boolean {
