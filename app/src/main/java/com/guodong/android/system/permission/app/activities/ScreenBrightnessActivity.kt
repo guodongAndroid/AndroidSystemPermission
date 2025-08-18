@@ -34,12 +34,20 @@ class ScreenBrightnessActivity : BaseActivity<ActivityScreenBrightnessBinding>()
             openDisplaySettings()
         }
 
-        btnScreenOff.setOnClickListener {
+        btnScreenOffAndOn.setOnClickListener {
             lifecycleScope.launch {
                 SystemPermissionCompat.setScreenOff()
                 delay(10_000L)
                 SystemPermissionCompat.setScreenOn()
             }
+        }
+
+        btnScreenOff.setOnClickListener {
+            SystemPermissionCompat.setScreenOff()
+        }
+
+        btnScreenOn.setOnClickListener {
+            SystemPermissionCompat.setScreenOn()
         }
 
         msUiMode.setOnCheckedChangeListener { _, isChecked ->

@@ -52,7 +52,9 @@
     <string name="open_system_settings">Open System Settings</string>
     <string name="open_development_settings">Open Development Settings</string>
     <string name="open_display_settings">Open Display Settings</string>
-    <string name="screen_off">Screen off and on after 10 seconds</string>
+    <string name="screen_off_and_on">Screen off and on after 10 seconds</string>
+    <string name="screen_off">Screen Off</string>
+    <string name="screen_on">Screen On</string>
     <string name="hint_adb_port">Adb Port (5000 – 65535)</string>
     <string name="placeholder_adb_port">5555</string>
     <string name="get_adb_port">Get Adb Port</string>

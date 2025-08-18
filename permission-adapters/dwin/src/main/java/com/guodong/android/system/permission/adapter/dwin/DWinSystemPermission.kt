@@ -3,9 +3,11 @@ package com.guodong.android.system.permission.adapter.dwin
 import android.content.Intent
 import android.os.SystemProperties
 import android.provider.Settings
+import android.view.SurfaceControlHidden
 import androidx.annotation.Keep
 import com.guodong.android.system.permission.AospSystemPermission
 import com.guodong.android.system.permission.Vendor
+import rikka.hidden.compat.SurfaceControlApis
 
 /**
  * Created by guodongAndroid on 2025/8/15
@@ -40,6 +42,17 @@ class DWinSystemPermission : AospSystemPermission() {
     override fun getVendor(): String {
         return Vendor.DWIN
     }
+
+    // region modify by john.wick on 2025/8/18 14:33 由于迪文的系统为纯原生系统，调用标准的息屏接口后CPU会进入
+    // 休眠，导致网络断开，于是以下两个接口将直接调用底层的屏幕相关接口
+    override fun setScreenOn() {
+        SurfaceControlApis.setDisplayPowerMode(SurfaceControlHidden.POWER_MODE_NORMAL)
+    }
+
+    override fun setScreenOff() {
+        SurfaceControlApis.setDisplayPowerMode(SurfaceControlHidden.POWER_MODE_OFF)
+    }
+    // endregion modify by john.wick on 2025/8/18 14:33
 
     override fun enableSystemBar(enable: Boolean) {
         if (enable) {

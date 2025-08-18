@@ -21,9 +21,19 @@
             android:text="@string/open_display_settings" />
 
         <Button
+            android:id="@+id/btn_screen_off_and_on"
+            style="@style/PermissionItemBtnStyle"
+            android:text="@string/screen_off_and_on" />
+
+        <Button
             android:id="@+id/btn_screen_off"
             style="@style/PermissionItemBtnStyle"
             android:text="@string/screen_off" />
+
+        <Button
+            android:id="@+id/btn_screen_on"
+            style="@style/PermissionItemBtnStyle"
+            android:text="@string/screen_on" />
 
         <com.google.android.material.materialswitch.MaterialSwitch
             android:id="@+id/ms_ui_mode"
