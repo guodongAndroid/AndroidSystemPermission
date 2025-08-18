@@ -25,13 +25,13 @@ internal object AdbCompat : IAdb {
             IAdb.ADB_SETTING_OFF
         ) == IAdb.ADB_SETTING_ON
 
-        val isWifiEnabled = Settings.Global.getInt(
+        val isAdbWifiEnabled = Settings.Global.getInt(
             context.contentResolver,
             IAdb.ADB_WIFI_ENABLED,
             IAdb.ADB_SETTING_OFF
         ) == IAdb.ADB_SETTING_ON
 
-        return isAdbEnabled && isWifiEnabled
+        return isAdbEnabled || isAdbWifiEnabled
     }
 
     override fun setAdbPort(port: Int) {

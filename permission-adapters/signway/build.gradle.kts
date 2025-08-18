@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.guodong.android.system.permission"
+    namespace = "com.guodong.android.system.permission.adapter.signway"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
@@ -15,9 +15,6 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
-
-        buildConfigField("Long", "VERSION_CODE", "${libs.versions.versionCode.get().toLong()}L")
-        buildConfigField("String", "VERSION_NAME", "\"${libs.versions.versionName.get()}\"")
     }
 
     buildTypes {
@@ -28,10 +25,6 @@ android {
                 "proguard-rules.pro"
             )
         }
-    }
-
-    buildFeatures {
-        buildConfig = true
     }
 
     compileOptions {
@@ -51,4 +44,6 @@ dependencies {
 
     implementation(libs.hidden.compat)
     compileOnly(libs.hidden.stub)
+
+    api(project(":permission"))
 }

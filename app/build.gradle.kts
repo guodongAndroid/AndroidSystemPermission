@@ -72,6 +72,13 @@ android {
             dimension = "vendor"
             resValue("string", "app_name", "AndroidSystemPermissionApp-dwin")
         }
+
+        create("signway") {
+            applicationIdSuffix = ".signway"
+            versionNameSuffix = "-signway"
+            dimension = "vendor"
+            resValue("string", "app_name", "AndroidSystemPermissionApp-signway")
+        }
     }
 
     sourceSets {
@@ -85,6 +92,10 @@ android {
 
         getByName("dwin") {
             java.srcDirs("src/dwin/java")
+        }
+
+        getByName("signway") {
+            java.srcDirs("src/signway/java")
         }
     }
 
@@ -119,6 +130,7 @@ dependencies {
     add("aospImplementation", project(":permission"))
     add("hikvisionImplementation", project(":permission-adapters:hikvision"))
     add("dwinImplementation", project(":permission-adapters:dwin"))
+    add("signwayImplementation", project(":permission-adapters:signway"))
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

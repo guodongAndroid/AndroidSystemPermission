@@ -2,8 +2,8 @@ package com.guodong.android.system.permission.app
 
 import android.app.Application
 import android.util.Log
-import com.guodong.android.system.permission.AospSystemPermission
 import com.guodong.android.system.permission.SystemPermissionCompat
+import com.guodong.android.system.permission.adapter.signway.SignWaySystemPermission
 
 /**
  * Created by john.wick on 2025/7/1
@@ -19,7 +19,7 @@ class PermissionApplication : Application() {
 
         Log.d(TAG, "onCreate: currentProcessName: ${SystemPermissionCompat.currentProcessName()}")
 
-        SystemPermissionCompat.setDelegate(AospSystemPermission())
+        SystemPermissionCompat.setDelegate(SignWaySystemPermission())
         SystemPermissionCompat.setContext(this)
     }
 }

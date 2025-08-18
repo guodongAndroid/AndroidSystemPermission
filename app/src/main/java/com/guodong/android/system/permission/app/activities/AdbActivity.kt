@@ -67,10 +67,10 @@ class AdbActivity : BaseActivity<ActivityAdbBinding>() {
 
     private fun ActivityAdbBinding.refreshUI() {
         val isAdbEnabled = SystemPermissionCompat.isAdbEnabled()
-        msAdb.isChecked = isAdbEnabled
 
         refreshAdbPortUI()
         refreshAdbPortStatusUI(isAdbEnabled)
+        msAdb.isChecked = isAdbEnabled
     }
 
     private fun ActivityAdbBinding.refreshAdbPortUI() {
