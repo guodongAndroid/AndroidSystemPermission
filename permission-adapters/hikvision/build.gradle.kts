@@ -46,8 +46,11 @@ dependencies {
     implementation(libs.kotlin.coroutines.core)
     implementation(libs.kotlin.coroutines.android)
 
-    implementation(libs.hidden.compat)
-    compileOnly(libs.hidden.stub)
+    debugImplementation(libs.hidden.compat.debug)
+    releaseImplementation(libs.hidden.compat.release)
+    debugCompileOnly(libs.hidden.stub.debug)
+    releaseCompileOnly(libs.hidden.stub.release)
+
     api(project(":permission-adapters:aosp"))
 
     debugImplementation(project(":permission-aars:hikvision"))

@@ -1,0 +1,4 @@
+[submodule "permission-hidden-api"]
+	path = permission-hidden-api
+	url = https://github.com/guodongAndroid/HiddenApi.git
+	branch = gd/master

@@ -1,8 +1,8 @@
 [versions]
-agp = "8.10.0"
+agp = "8.10.1"
 kotlin = "2.0.21"
 kotlinCoroutines = "1.10.1"
-coreKtx = "1.15.0"
+coreKtx = "1.16.0"
 
 compileSdk = "36"
 minSdk = "21"
@@ -18,7 +18,8 @@ persmission = "1.0.0"
 permissionAarHikvision = "1.0.0"
 
 # region https://github.com/guodongAndroid/HiddenApi.git
-hidden-api = "1.0.1"
+hidden-api-debug = "1.0.2-SNAPSHOT"
+hidden-api-release = "1.0.1"
 # endregion
 
 # region https://github.com/guodongAndroid/HiddenApiRefinePlugin.git
@@ -73,8 +74,10 @@ xstream = { module = "com.thoughtworks.xstream:xstream", version.ref = "xstream"
 
 file-picker = { group = "me.rosuh", name = "AndroidFilePicker", version.ref = "filePicker" }
 
-hidden-compat = { group = "com.sunxiaodou.android", name = "hidden-compat", version.ref = "hidden-api" }
-hidden-stub = { group = "com.sunxiaodou.android", name = "hidden-stub", version.ref = "hidden-api" }
+hidden-compat-debug = { group = "com.sunxiaodou.android", name = "compat", version.ref = "hidden-api-debug" }
+hidden-compat-release = { group = "com.sunxiaodou.android", name = "hidden-compat", version.ref = "hidden-api-release" }
+hidden-stub-debug = { group = "com.sunxiaodou.android", name = "stub", version.ref = "hidden-api-debug" }
+hidden-stub-release = { group = "com.sunxiaodou.android", name = "hidden-stub", version.ref = "hidden-api-release" }
 refine-runtime = { group = "dev.rikka.tools.refine", name = "runtime", version.ref = "refine" }
 refine-annotation = { group = "dev.rikka.tools.refine", name = "annotation", version.ref = "refine" }
 refine-annotation-processor = { group = "dev.rikka.tools.refine", name = "annotation-processor", version.ref = "refine" }
