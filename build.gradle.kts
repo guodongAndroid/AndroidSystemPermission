@@ -17,7 +17,7 @@ subprojects {
     plugins.withId("com.android.library") {
         apply(plugin = "com.vanniktech.maven.publish")
 
-        val version = "1.0.0"
+        val version = "1.0.1-SNAPSHOT"
 
         extensions.configure<LibraryAndroidComponentsExtension> {
             onVariants { variant ->
