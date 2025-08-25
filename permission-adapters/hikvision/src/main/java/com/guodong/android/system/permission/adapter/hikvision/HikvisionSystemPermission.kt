@@ -26,7 +26,7 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 /**
- * Created by john.wick on 2025/7/2
+ * Created by guodongAndroid on 2025/7/2
  */
 @Keep
 @SuppressLint("LongLogTag")

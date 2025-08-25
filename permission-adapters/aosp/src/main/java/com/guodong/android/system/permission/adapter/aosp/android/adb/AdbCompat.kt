@@ -6,7 +6,7 @@ import android.os.SystemProperties
 import android.provider.Settings
 
 /**
- * Created by john.wick on 2025/6/30
+ * Created by guodongAndroid on 2025/6/30
  */
 internal object AdbCompat : IAdb {
 

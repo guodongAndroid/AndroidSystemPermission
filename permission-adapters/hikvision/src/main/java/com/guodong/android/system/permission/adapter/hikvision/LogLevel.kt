@@ -3,7 +3,7 @@ package com.guodong.android.system.permission.adapter.hikvision
 import androidx.annotation.StringDef
 
 /**
- * Created by john.wick on 2025/7/3
+ * Created by guodongAndroid on 2025/7/3
  */
 @StringDef(
     LogLevel.ASSERT,

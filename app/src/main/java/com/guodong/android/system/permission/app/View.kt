@@ -6,7 +6,7 @@ import androidx.core.content.getSystemService
 import com.google.android.material.textfield.TextInputLayout
 
 /**
- * Created by john.wick on 2025/8/5
+ * Created by guodongAndroid on 2025/8/5
  */
 fun View.hideKeyboard() {
     val imm = context.getSystemService<InputMethodManager>()!!

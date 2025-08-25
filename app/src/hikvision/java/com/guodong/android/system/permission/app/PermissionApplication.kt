@@ -6,7 +6,7 @@ import com.guodong.android.system.permission.adapter.hikvision.HikvisionSystemPe
 import com.guodong.android.system.permission.api.SystemPermissionCompat
 
 /**
- * Created by john.wick on 2025/7/1
+ * Created by guodongAndroid on 2025/7/1
  */
 class PermissionApplication : Application() {
 

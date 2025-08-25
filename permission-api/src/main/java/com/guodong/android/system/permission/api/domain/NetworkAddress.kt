@@ -4,7 +4,7 @@ import androidx.annotation.IntDef
 import androidx.annotation.Keep
 
 /**
- * Created by john.wick on 2025/5/27
+ * Created by guodongAndroid on 2025/5/27
  */
 @Keep
 data class NetworkAddress(

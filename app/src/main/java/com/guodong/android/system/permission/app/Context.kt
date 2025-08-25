@@ -13,7 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 /**
- * Created by john.wick on 2025/8/5
+ * Created by guodongAndroid on 2025/8/5
  */
 fun Context.getVersionName(packageName: String): String {
     return try {

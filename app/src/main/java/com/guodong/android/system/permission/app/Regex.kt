@@ -3,7 +3,7 @@ package com.guodong.android.system.permission.app
 import java.net.Inet4Address
 
 /**
- * Created by john.wick on 2025/8/5
+ * Created by guodongAndroid on 2025/8/5
  */
 val REGEX_IP = """((25[0-5]|2[0-4]\d|[10]?\d?\d)\.){3}(25[0-5]|2[0-4]\d|[10]?\d?\d)""".toRegex()
 val REGEX_SUBNET_MASK = """(255\.(255\.(255\.(255|254|252|248|240|224|192|128|0)|0)|0)|0)""".toRegex()

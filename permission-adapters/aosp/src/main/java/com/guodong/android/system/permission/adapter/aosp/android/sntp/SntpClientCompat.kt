@@ -6,7 +6,7 @@ import androidx.annotation.WorkerThread
 import java.util.concurrent.TimeUnit
 
 /**
- * Created by john.wick on 2025/5/27
+ * Created by guodongAndroid on 2025/5/27
  */
 internal object SntpClientCompat : ISntpClient {
 

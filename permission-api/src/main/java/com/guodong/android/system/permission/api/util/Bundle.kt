@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.os.Parcelable
 
 /**
- * Created by john.wick on 2025/5/27
+ * Created by guodongAndroid on 2025/5/27
  */
 @Suppress("FunctionName")
 fun Bundle.ToString(): String {

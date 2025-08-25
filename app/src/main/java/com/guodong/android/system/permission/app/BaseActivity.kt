@@ -17,7 +17,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 /**
- * Created by john.wick on 2025/8/5
+ * Created by guodongAndroid on 2025/8/5
  */
 abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 

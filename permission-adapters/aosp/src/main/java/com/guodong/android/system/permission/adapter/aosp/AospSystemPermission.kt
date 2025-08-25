@@ -47,7 +47,7 @@ import kotlin.math.ceil
 import kotlin.math.floor
 
 /**
- * Created by john.wick on 2025/5/27
+ * Created by guodongAndroid on 2025/5/27
  */
 @Keep
 open class AospSystemPermission : ISystemPermission {

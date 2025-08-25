@@ -6,7 +6,7 @@ plugins {
 configurations.maybeCreate("default")
 artifacts.add("default", file("HikSDK_V1.2.2.aar"))
 
-// region modify by john.wick on 2025/8/19 10:56 对于新的 Maven Central Portal，目前还没有可用的独立上传工件
+// region modify by guodongAndroid on 2025/8/19 10:56 对于新的 Maven Central Portal，目前还没有可用的独立上传工件
 // 的插件，且 Gradle 官方的 maven-publish 插件也尚不支持，所以此仓库暂时使用 maven-publish 插件生成 Maven 仓库的
 // 标准布局，然后再使用 Maven Central Portal 的 Web UI 进行上传
 publishing {

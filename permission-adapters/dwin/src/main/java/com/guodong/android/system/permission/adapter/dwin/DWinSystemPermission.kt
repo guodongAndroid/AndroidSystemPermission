@@ -16,13 +16,13 @@ import rikka.hidden.compat.SurfaceControlApis
 class DWinSystemPermission : AospSystemPermission() {
 
     companion object {
-        // region modify by john.wick on 2025/8/18 11:57 旧API
+        // region modify by guodongAndroid on 2025/8/18 11:57 旧API
         private const val PERSIST_SYS_NVBSHOW = "persist.sys.nvbshow"
         private const val ACTION_COM_ANDROID_NAVIGATION_STATUS = "com.android.navigation.status"
         private const val EXTRA_HIDE = "hide"
-        // endregion modify by john.wick on 2025/8/18 11:57 旧API
+        // endregion modify by guodongAndroid on 2025/8/18 11:57 旧API
 
-        // region modify by john.wick on 2025/8/18 11:57 新API
+        // region modify by guodongAndroid on 2025/8/18 11:57 新API
         private const val PERSIST_SYS_NAVIGATIONBAR_ENABLE = "persist.sys.navigationbar.enable"
         private const val PERSIST_SYS_STATUSBAR_ENABLE = "persist.sys.statusbar.enable"
         private const val PERSIST_SYS_EXPLAN_ENABLE = "persist.sys.explan.enable"
@@ -35,7 +35,7 @@ class DWinSystemPermission : AospSystemPermission() {
 
         private const val ACTION_SYS_EXPLAN_SHOW = "sys.explan.show"
         private const val ACTION_SYS_EXPLAN_HIDE = "sys.explan.hide"
-        // endregion modify by john.wick on 2025/8/18 11:57 新API
+        // endregion modify by guodongAndroid on 2025/8/18 11:57 新API
     }
 
     @Vendor
@@ -43,7 +43,7 @@ class DWinSystemPermission : AospSystemPermission() {
         return Vendor.DWIN
     }
 
-    // region modify by john.wick on 2025/8/18 14:33 由于迪文的系统为纯原生系统，调用标准的息屏接口后CPU会进入
+    // region modify by guodongAndroid on 2025/8/18 14:33 由于迪文的系统为纯原生系统，调用标准的息屏接口后CPU会进入
     // 休眠，导致网络断开，于是以下两个接口将直接调用底层的屏幕相关接口
     override fun setScreenOn() {
         SurfaceControlApis.setDisplayPowerMode(SurfaceControlHidden.POWER_MODE_NORMAL)
@@ -52,7 +52,7 @@ class DWinSystemPermission : AospSystemPermission() {
     override fun setScreenOff() {
         SurfaceControlApis.setDisplayPowerMode(SurfaceControlHidden.POWER_MODE_OFF)
     }
-    // endregion modify by john.wick on 2025/8/18 14:33
+    // endregion modify by guodongAndroid on 2025/8/18 14:33
 
     override fun enableSystemBar(enable: Boolean) {
         if (enable) {

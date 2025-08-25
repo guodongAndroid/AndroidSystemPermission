@@ -13,7 +13,7 @@ import rikka.hidden.compat.AppOpsApis
 import rikka.hidden.compat.PermissionManagerApis
 
 /**
- * Created by john.wick on 2025/5/27
+ * Created by guodongAndroid on 2025/5/27
  */
 internal interface IRuntimePermission {
 

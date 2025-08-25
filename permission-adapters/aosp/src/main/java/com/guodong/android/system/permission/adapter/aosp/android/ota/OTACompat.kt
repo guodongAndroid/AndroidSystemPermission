@@ -10,7 +10,7 @@ import kotlin.concurrent.thread
 
 
 /**
- * Created by john.wick on 2025/5/27
+ * Created by guodongAndroid on 2025/5/27
  */
 internal object OTACompat {
 

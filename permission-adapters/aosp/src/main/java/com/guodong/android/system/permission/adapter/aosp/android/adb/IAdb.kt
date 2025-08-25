@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.annotation.IntRange
 
 /**
- * Created by john.wick on 2025/6/30
+ * Created by guodongAndroid on 2025/6/30
  */
 internal interface IAdb {
 
