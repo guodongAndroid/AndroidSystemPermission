@@ -5,6 +5,7 @@ import android.app.Application
 import android.content.ComponentName
 import android.content.Context
 import android.graphics.Bitmap
+import android.hardware.usb.UsbDevice
 import android.os.Build
 import androidx.annotation.IntRange
 import androidx.annotation.Keep
@@ -98,9 +99,14 @@ interface ISystemPermission {
     fun factoryReset(@FactoryResetMode mode: Int)
 
     /**
-     * 静默授予权限
+     * 静默授予运行时/AppOps权限
      */
     fun grantRuntimePermission(packageName: String): Boolean
+
+    /**
+     * 静默授予Usb权限
+     */
+    fun grantUsbPermission(device: UsbDevice, packageName: String)
 
     /**
      * 获取系统桌面

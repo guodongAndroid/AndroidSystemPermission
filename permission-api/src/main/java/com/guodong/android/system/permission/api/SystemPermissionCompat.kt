@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.ComponentName
 import android.content.Context
 import android.graphics.Bitmap
+import android.hardware.usb.UsbDevice
 import android.os.Build
 import androidx.annotation.IntRange
 import androidx.annotation.Keep
@@ -89,6 +90,10 @@ object SystemPermissionCompat : ISystemPermission {
 
     override fun grantRuntimePermission(packageName: String): Boolean {
         return delegate.grantRuntimePermission(packageName)
+    }
+
+    override fun grantUsbPermission(device: UsbDevice, packageName: String) {
+        delegate.grantUsbPermission(device, packageName)
     }
 
     override fun getLauncher(): ComponentName? {

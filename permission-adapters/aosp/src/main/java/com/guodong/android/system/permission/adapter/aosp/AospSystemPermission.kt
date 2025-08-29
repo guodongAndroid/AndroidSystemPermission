@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.IPackageDataObserver
 import android.graphics.Bitmap
+import android.hardware.usb.UsbDevice
 import android.net.ConnectivityManager
 import android.os.Build
 import android.os.SystemClock
@@ -41,6 +42,7 @@ import rikka.hidden.compat.PackageManagerApis
 import rikka.hidden.compat.PowerManagerApis
 import rikka.hidden.compat.TakeScreenshotApis
 import rikka.hidden.compat.UiModeManagerApis
+import rikka.hidden.compat.UsbManagerApis
 import java.io.File
 import java.util.Calendar
 import java.util.TimeZone
@@ -144,17 +146,21 @@ open class AospSystemPermission : ISystemPermission {
     override fun factoryReset(@FactoryResetMode mode: Int) {
         when (mode) {
             FactoryResetMode.FULL -> {
-                FactoryResetApis.factoryReset(context, true)
+                FactoryResetApis.factoryReset(true)
             }
 
             FactoryResetMode.USER_DATA -> {
-                FactoryResetApis.factoryReset(context, false)
+                FactoryResetApis.factoryReset(false)
             }
         }
     }
 
     override fun grantRuntimePermission(packageName: String): Boolean {
         return RuntimePermissionCompat.grantRuntimePermission(context, packageName)
+    }
+
+    override fun grantUsbPermission(device: UsbDevice, packageName: String) {
+        UsbManagerApis.grantPermission(device, packageName)
     }
 
     override fun getLauncher(): ComponentName? {
