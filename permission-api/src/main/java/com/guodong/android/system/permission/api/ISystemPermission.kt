@@ -10,6 +10,7 @@ import androidx.annotation.IntRange
 import androidx.annotation.Keep
 import androidx.annotation.RequiresApi
 import androidx.annotation.RestrictTo
+import com.guodong.android.system.permission.api.annotation.FactoryResetMode
 import com.guodong.android.system.permission.api.annotation.Rotation
 import com.guodong.android.system.permission.api.domain.NetworkAddress
 import java.util.concurrent.TimeUnit
@@ -94,7 +95,7 @@ interface ISystemPermission {
     /**
      * 恢复出厂设置
      */
-    fun factoryReset()
+    fun factoryReset(@FactoryResetMode mode: Int)
 
     /**
      * 静默授予权限

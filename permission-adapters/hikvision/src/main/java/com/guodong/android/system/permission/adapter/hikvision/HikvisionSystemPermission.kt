@@ -152,8 +152,20 @@ class HikvisionSystemPermission : AospSystemPermission() {
         system.rebootDevice()
     }
 
-    override fun factoryReset() {
-        system.factoryReset(FactoryResetMode.FULL)
+    override fun factoryReset(@com.guodong.android.system.permission.api.annotation.FactoryResetMode mode: Int) {
+        val mode = when (mode) {
+            com.guodong.android.system.permission.api.annotation.FactoryResetMode.FULL -> {
+                FactoryResetMode.FULL
+            }
+
+            com.guodong.android.system.permission.api.annotation.FactoryResetMode.USER_DATA -> {
+                FactoryResetMode.BASIC
+            }
+
+            else -> FactoryResetMode.OTHER
+        }
+
+        system.factoryReset(mode)
     }
 
     override fun setScreenBrightness(level: Int) {

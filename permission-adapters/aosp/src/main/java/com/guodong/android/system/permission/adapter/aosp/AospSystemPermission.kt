@@ -25,6 +25,7 @@ import com.guodong.android.system.permission.api.IPackageDeleteObserver
 import com.guodong.android.system.permission.api.IPackageInstallObserver
 import com.guodong.android.system.permission.api.ISystemPermission
 import com.guodong.android.system.permission.api.Vendor
+import com.guodong.android.system.permission.api.annotation.FactoryResetMode
 import com.guodong.android.system.permission.api.annotation.Rotation
 import com.guodong.android.system.permission.api.domain.NetworkAddress
 import kotlinx.coroutines.Dispatchers
@@ -33,6 +34,7 @@ import rikka.hidden.compat.ActivityManagerApis
 import rikka.hidden.compat.AlarmManagerApis
 import rikka.hidden.compat.DeviceIdleControllerApis
 import rikka.hidden.compat.EthernetManagerApis
+import rikka.hidden.compat.FactoryResetApis
 import rikka.hidden.compat.LauncherApis
 import rikka.hidden.compat.PackageInstallerApis
 import rikka.hidden.compat.PackageManagerApis
@@ -95,6 +97,7 @@ open class AospSystemPermission : ISystemPermission {
         EthernetManagerApis.setStaticAddress(ipAddress, netmask, gateway, dns1, dns2)
         true
     } catch (e: Exception) {
+        Log.e(TAG, "setEthernetStaticAddress: ${e.message}", e)
         false
     }
 
@@ -102,13 +105,19 @@ open class AospSystemPermission : ISystemPermission {
         EthernetManagerApis.setDhcpAddress()
         true
     } catch (e: Exception) {
+        Log.e(TAG, "setEthernetDhcpAddress: ${e.message}", e)
         false
     }
 
     override suspend fun getEthernetNetworkAddress(): NetworkAddress = try {
         val address = EthernetManagerApis.getNetworkAddress()
+        val ipAssignment = when (address.ipAssignment) {
+            rikka.hidden.compat.domain.NetworkAddress.IpAssignment.STATIC -> NetworkAddress.IpAssignment.STATIC
+            rikka.hidden.compat.domain.NetworkAddress.IpAssignment.DHCP -> NetworkAddress.IpAssignment.DHCP
+            else -> NetworkAddress.IpAssignment.UNASSIGNED
+        }
         NetworkAddress(
-            address.ipAssignment,
+            ipAssignment,
             address.address,
             address.netmask,
             address.gateway,
@@ -116,6 +125,7 @@ open class AospSystemPermission : ISystemPermission {
             address.dns2
         )
     } catch (e: Exception) {
+        Log.e(TAG, "getEthernetNetworkAddress: ${e.message}", e)
         NetworkAddress.UNASSIGNED
     }
 
@@ -131,8 +141,16 @@ open class AospSystemPermission : ISystemPermission {
         PowerManagerApis.shutdownNoThrow("")
     }
 
-    override fun factoryReset() {
-        TODO("factoryReset")
+    override fun factoryReset(@FactoryResetMode mode: Int) {
+        when (mode) {
+            FactoryResetMode.FULL -> {
+                FactoryResetApis.factoryReset(context, true)
+            }
+
+            FactoryResetMode.USER_DATA -> {
+                FactoryResetApis.factoryReset(context, false)
+            }
+        }
     }
 
     override fun grantRuntimePermission(packageName: String): Boolean {
@@ -153,7 +171,7 @@ open class AospSystemPermission : ISystemPermission {
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 component = ComponentName("com.android.launcher3", "com.android.launcher3.Launcher")
             })
-        } catch (ignore: Exception) {
+        } catch (_: Exception) {
             try {
                 context.startActivity(Intent().apply {
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)

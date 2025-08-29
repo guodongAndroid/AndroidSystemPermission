@@ -40,67 +40,67 @@ class PermissionApplication : Application() {
 
 ## 特性
 
-| 接口名称                              | 接口描述                           | Android API | 备注     |
-| ------------------------------------- | ---------------------------------- | ----------- | -------- |
-| `setContext`                          | 设置上下文                         |             |          |
-| `getVendor`                           | 获取厂商标识                       |             |          |
-| `getVersion`                          | 获取SDK版本                        |             |          |
-| `enableEthernet`                      | 是否启用以太网                     |             |          |
-| `isEthernetEnabled`                   | 以太网是否启用                     |             |          |
-| `setEthernetStaticAddress`            | 设置以太网静态地址                 |             |          |
-| `setEthernetDhcpAddress`              | 设置以太网DHCP                     |             |          |
-| `getEthernetNetworkAddress`           | 获取以太网网络地址                 |             |          |
-| `getEthernetMacAddress`               | 获取以太网MAC地址                  |             |          |
-| `reboot`                              | 重启设备                           |             |          |
-| `shutdown`                            | 关闭设备                           |             |          |
-| `factoryReset`                        | 恢复出厂设置                       |             | 暂未实现 |
-| `grantRuntimePermission`              | 授予运行时权限和特殊权限           |             |          |
-| `getLauncher`                         | 获取系统桌面                       |             |          |
-| `setLauncher`                         | 设置系统桌面                       |             |          |
-| `openSystemLauncher`                  | 打开系统桌面                       |             |          |
-| `openSystemSettings`                  | 打开系统设置                       |             |          |
-| `openSystemDevelopmentSettings`       | 打开系统开发者选项设置             |             |          |
-| `setScreenBrightness`                 | 设置屏幕百分比亮度                 |             |          |
-| `getScreenBrightness`                 | 获取屏幕百分比亮度                 |             |          |
-| `enableAutoBrightness`                | 是否启用自动调节亮度               |             |          |
-| `isAutoBrightnessEnabled`             | 自动调节亮度是否启用               |             |          |
-| `enableDarkUI`                        | 是否启用深色主题                   | API 30      |          |
-| `isDarkUIEnabled`                     | 深色主题是否启用                   | API 30      |          |
-| `enableScreenNeverOff`                | 是否启用永不关闭屏幕               |             |          |
-| `isScreenNeverOffEnabled`             | 永不关闭屏幕是否启用               |             |          |
-| `setScreenOn`                         | 亮屏                               |             |          |
-| `setScreenOff`                        | 息屏                               |             |          |
-| `enableScreenAutoRotation`            | 是否启用屏幕自动旋转               |             |          |
-| `isScreenAutoRotationEnabled`         | 屏幕自动旋转是否启用               |             |          |
-| `setScreenRotation`                   | 设置屏幕旋转，顺时针旋转           |             |          |
-| `getScreenRotation`                   | 获取屏幕旋转                       |             |          |
-| `enableAdb`                           | 是否启用ADB                        |             |          |
-| `isAdbEnabled`                        | ADB是否启用                        |             |          |
-| `setAdbPort`                          | 设置ADB端口                        |             |          |
-| `getAdbPort`                          | 获取ADB端口                        |             |          |
-| `enableSystemBar`                     | 是否启用状态栏和导航栏             |             |          |
-| `isSystemBarEnabled`                  | 状态栏和导航栏是否启用             |             |          |
-| `setTimeZone`                         | 设置系统时区                       |             |          |
-| `setDate`                             | 设置系统日期                       |             |          |
-| `setTime`                             | 设置系统时间                       |             |          |
-| `enableTimeFormat24H`                 | 是否启用24小时制                   |             |          |
-| `isTimeFormat24HEnabled`              | 24小时制是否启用                   |             |          |
-| `clearApplicationUserData`            | 清除应用程序用户数据，包含缓存数据 |             |          |
-| `installPackage`                      | 静默安装                           |             |          |
-| `uninstallPackage`                    | 静默卸载                           |             |          |
-| `killBackgroundProcesses`             | 杀死应用后台进程                   |             |          |
-| `forceStopPackage`                    | 强行停止应用                       |             |          |
-| `installOTAPackage`                   | OTA升级                            |             |          |
-| `takeScreenShot`                      | 屏幕截图                           |             |          |
-| `takeScreenShot`                      | 屏幕截图                           |             |          |
-| `getFirmwareVersion`                  | 获取固件版本                       |             |          |
-| `getNtpTime`                          | 获取NTP服务器时间                  |             |          |
-| `addToPermanentPowerSaveAllowList`    | 忽略应用电池优化                   | API 23      |          |
-| `removeToPermanentPowerSaveAllowList` | 应用电池优化                       | API 23      |          |
-| `isPowerSaveWhitelistApp`             | 应用是否已忽略电池优化             | API 23      |          |
-| `currentPackageName`                  | 获取当前包名                       |             |          |
-| `currentProcessName`                  | 获取当前进程名                     |             |          |
-| `currentApplication`                  | 获取当前 `Application`             |             |          |
+| 接口名称                              | 接口描述                           | Android API | 支持版本       | 备注 |
+| ------------------------------------- | ---------------------------------- | ----------- | -------------- | ---- |
+| `setContext`                          | 设置上下文                         |             | 1.0.0 - latest |      |
+| `getVendor`                           | 获取厂商标识                       |             | 1.0.0 - latest |      |
+| `getVersion`                          | 获取SDK版本                        |             | 1.0.0 - latest |      |
+| `enableEthernet`                      | 是否启用以太网                     |             | 1.0.0 - latest |      |
+| `isEthernetEnabled`                   | 以太网是否启用                     |             | 1.0.0 - latest |      |
+| `setEthernetStaticAddress`            | 设置以太网静态地址                 |             | 1.0.0 - latest |      |
+| `setEthernetDhcpAddress`              | 设置以太网DHCP                     |             | 1.0.0 - latest |      |
+| `getEthernetNetworkAddress`           | 获取以太网网络地址                 |             | 1.0.0 - latest |      |
+| `getEthernetMacAddress`               | 获取以太网MAC地址                  |             | 1.0.0 - latest |      |
+| `reboot`                              | 重启设备                           |             | 1.0.0 - latest |      |
+| `shutdown`                            | 关闭设备                           |             | 1.0.0 - latest |      |
+| `factoryReset`                        | 恢复出厂设置                       |             | 1.0.1 - latest |      |
+| `grantRuntimePermission`              | 授予运行时权限和特殊权限           |             | 1.0.0 - latest |      |
+| `getLauncher`                         | 获取系统桌面                       |             | 1.0.0 - latest |      |
+| `setLauncher`                         | 设置系统桌面                       |             | 1.0.0 - latest |      |
+| `openSystemLauncher`                  | 打开系统桌面                       |             | 1.0.0 - latest |      |
+| `openSystemSettings`                  | 打开系统设置                       |             | 1.0.0 - latest |      |
+| `openSystemDevelopmentSettings`       | 打开系统开发者选项设置             |             | 1.0.0 - latest |      |
+| `setScreenBrightness`                 | 设置屏幕百分比亮度                 |             | 1.0.0 - latest |      |
+| `getScreenBrightness`                 | 获取屏幕百分比亮度                 |             | 1.0.0 - latest |      |
+| `enableAutoBrightness`                | 是否启用自动调节亮度               |             | 1.0.0 - latest |      |
+| `isAutoBrightnessEnabled`             | 自动调节亮度是否启用               |             | 1.0.0 - latest |      |
+| `enableDarkUI`                        | 是否启用深色主题                   | API 30      | 1.0.0 - latest |      |
+| `isDarkUIEnabled`                     | 深色主题是否启用                   | API 30      | 1.0.0 - latest |      |
+| `enableScreenNeverOff`                | 是否启用永不关闭屏幕               |             | 1.0.0 - latest |      |
+| `isScreenNeverOffEnabled`             | 永不关闭屏幕是否启用               |             | 1.0.0 - latest |      |
+| `setScreenOn`                         | 亮屏                               |             | 1.0.0 - latest |      |
+| `setScreenOff`                        | 息屏                               |             | 1.0.0 - latest |      |
+| `enableScreenAutoRotation`            | 是否启用屏幕自动旋转               |             | 1.0.0 - latest |      |
+| `isScreenAutoRotationEnabled`         | 屏幕自动旋转是否启用               |             | 1.0.0 - latest |      |
+| `setScreenRotation`                   | 设置屏幕旋转，顺时针旋转           |             | 1.0.0 - latest |      |
+| `getScreenRotation`                   | 获取屏幕旋转                       |             | 1.0.0 - latest |      |
+| `enableAdb`                           | 是否启用ADB                        |             | 1.0.0 - latest |      |
+| `isAdbEnabled`                        | ADB是否启用                        |             | 1.0.0 - latest |      |
+| `setAdbPort`                          | 设置ADB端口                        |             | 1.0.0 - latest |      |
+| `getAdbPort`                          | 获取ADB端口                        |             | 1.0.0 - latest |      |
+| `enableSystemBar`                     | 是否启用状态栏和导航栏             |             | 1.0.0 - latest |      |
+| `isSystemBarEnabled`                  | 状态栏和导航栏是否启用             |             | 1.0.0 - latest |      |
+| `setTimeZone`                         | 设置系统时区                       |             | 1.0.0 - latest |      |
+| `setDate`                             | 设置系统日期                       |             | 1.0.0 - latest |      |
+| `setTime`                             | 设置系统时间                       |             | 1.0.0 - latest |      |
+| `enableTimeFormat24H`                 | 是否启用24小时制                   |             | 1.0.0 - latest |      |
+| `isTimeFormat24HEnabled`              | 24小时制是否启用                   |             | 1.0.0 - latest |      |
+| `clearApplicationUserData`            | 清除应用程序用户数据，包含缓存数据 |             | 1.0.0 - latest |      |
+| `installPackage`                      | 静默安装                           |             | 1.0.0 - latest |      |
+| `uninstallPackage`                    | 静默卸载                           |             | 1.0.0 - latest |      |
+| `killBackgroundProcesses`             | 杀死应用后台进程                   |             | 1.0.0 - latest |      |
+| `forceStopPackage`                    | 强行停止应用                       |             | 1.0.0 - latest |      |
+| `installOTAPackage`                   | OTA升级                            |             | 1.0.0 - latest |      |
+| `takeScreenShot`                      | 屏幕截图                           |             | 1.0.0 - latest |      |
+| `takeScreenShot`                      | 屏幕截图                           |             | 1.0.0 - latest |      |
+| `getFirmwareVersion`                  | 获取固件版本                       |             | 1.0.0 - latest |      |
+| `getNtpTime`                          | 获取NTP服务器时间                  |             | 1.0.0 - latest |      |
+| `addToPermanentPowerSaveAllowList`    | 忽略应用电池优化                   | API 23      | 1.0.0 - latest |      |
+| `removeToPermanentPowerSaveAllowList` | 应用电池优化                       | API 23      | 1.0.0 - latest |      |
+| `isPowerSaveWhitelistApp`             | 应用是否已忽略电池优化             | API 23      | 1.0.0 - latest |      |
+| `currentPackageName`                  | 获取当前包名                       |             | 1.0.0 - latest |      |
+| `currentProcessName`                  | 获取当前进程名                     |             | 1.0.0 - latest |      |
+| `currentApplication`                  | 获取当前 `Application`             |             | 1.0.0 - latest |      |
 
 ## 示例
 
@@ -110,7 +110,7 @@ class PermissionApplication : Application() {
 val address = SystemPermissionCompat.getEthernetNetworkAddress()
 ```
 
-### 重启设置
+### 重启设备
 
 ```kotlin
 val reboot = SystemPermissionCompat.reboot()

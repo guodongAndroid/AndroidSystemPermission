@@ -6,14 +6,15 @@ import androidx.annotation.Keep
 /**
  * Created by guodongAndroid on 2025/7/2
  */
-@Keep
-@Target(AnnotationTarget.TYPE)
 @IntDef(
     EthernetState.CONNECTING,
     EthernetState.CONNECTED,
     EthernetState.DISCONNECTING,
     EthernetState.DISCONNECTED,
 )
+@Keep
+@Target(AnnotationTarget.TYPE)
+@Retention(AnnotationRetention.SOURCE)
 annotation class EthernetState {
     @Keep
     companion object {

@@ -3,9 +3,9 @@ package com.guodong.android.system.permission.app.activities
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.guodong.android.system.permission.api.SystemPermissionCompat
+import com.guodong.android.system.permission.api.annotation.FactoryResetMode
 import com.guodong.android.system.permission.app.BaseActivity
 import com.guodong.android.system.permission.app.databinding.ActivityDeviceBinding
 
@@ -50,7 +50,26 @@ class DeviceActivity : BaseActivity<ActivityDeviceBinding>() {
         }
 
         btnFactoryReset.setOnClickListener {
-            Toast.makeText(this@DeviceActivity, "暂未开发", Toast.LENGTH_SHORT).show()
+            var mode = FactoryResetMode.USER_DATA
+
+            AlertDialog.Builder(this@DeviceActivity)
+                .setTitle("确认恢复出厂设置？")
+                .setSingleChoiceItems(
+                    arrayOf("全量恢复(恢复本地存储)", "基准恢复(不恢复本地存储)"),
+                    1
+                ) { dialog, which ->
+                    mode = when (which) {
+                        0 -> FactoryResetMode.FULL
+                        1 -> FactoryResetMode.USER_DATA
+                        else -> FactoryResetMode.USER_DATA
+                    }
+                }.setPositiveButton("确认") { dialog, _ ->
+                    SystemPermissionCompat.factoryReset(mode)
+                    dialog.dismiss()
+                }.setNegativeButton("取消") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
         }
     }
 }

@@ -83,8 +83,8 @@ object SystemPermissionCompat : ISystemPermission {
         delegate.shutdown()
     }
 
-    override fun factoryReset() {
-        delegate.factoryReset()
+    override fun factoryReset(mode: Int) {
+        delegate.factoryReset(mode)
     }
 
     override fun grantRuntimePermission(packageName: String): Boolean {
