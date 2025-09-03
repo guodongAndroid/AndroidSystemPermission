@@ -135,3 +135,5 @@ val address = SystemPermissionCompat.getEthernetNetworkAddress()
 ```kotlin
 val reboot = SystemPermissionCompat.reboot()
 ```
+
+![android-system-permission](./imgs/android-system-permission.png)
