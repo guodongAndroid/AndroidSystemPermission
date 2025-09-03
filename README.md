@@ -13,31 +13,6 @@
 > - 欣威视通
 > - 迪文
 
-## 使用
-
-首先在 Application 里初始化：
-
-```kotlin
-class PermissionApplication : Application() {
-
-    companion object {
-        private const val TAG = "PermissionApplication"
-    }
-
-    override fun onCreate() {
-        super.onCreate()
-
-        Log.d(TAG, "onCreate: currentProcessName: ${SystemPermissionCompat.currentProcessName()}")
-
-        // 1.首先必须根据厂商选择合适的实现，进行注入
-        SystemPermissionCompat.setDelegate(AospSystemPermission())
-        
-        // 2.然后注入Context进行初始化
-        SystemPermissionCompat.setContext(this)
-    }
-}
-```
-
 ## 特性
 
 | 接口名称                              | 接口描述                           | Android API | 支持版本       | 备注 |
@@ -54,7 +29,8 @@ class PermissionApplication : Application() {
 | `reboot`                              | 重启设备                           |             | 1.0.0 - latest |      |
 | `shutdown`                            | 关闭设备                           |             | 1.0.0 - latest |      |
 | `factoryReset`                        | 恢复出厂设置                       |             | 1.0.1 - latest |      |
-| `grantRuntimePermission`              | 授予运行时权限和特殊权限           |             | 1.0.0 - latest |      |
+| `grantRuntimePermission`              | 静默授予运行时权限和特殊权限       |             | 1.0.0 - latest |      |
+| `grantUsbPermission`                  | 静默授予Usb权限                    |             | 1.0.1 - latest |      |
 | `getLauncher`                         | 获取系统桌面                       |             | 1.0.0 - latest |      |
 | `setLauncher`                         | 设置系统桌面                       |             | 1.0.0 - latest |      |
 | `openSystemLauncher`                  | 打开系统桌面                       |             | 1.0.0 - latest |      |
@@ -102,6 +78,50 @@ class PermissionApplication : Application() {
 | `currentProcessName`                  | 获取当前进程名                     |             | 1.0.0 - latest |      |
 | `currentApplication`                  | 获取当前 `Application`             |             | 1.0.0 - latest |      |
 
+## 集成
+
+```kotlin
+// AOSP
+implemention("com.sunxiaodou.android:system-permission-adapter-aosp:${latest-version}")
+
+// 海康威视
+implemention("com.sunxiaodou.android:system-permission-adapter-hikvision:${latest-version}")
+
+// 欣威视通
+implemention("com.sunxiaodou.android:system-permission-adapter-signway:${latest-version}")
+
+// 迪文
+implemention("com.sunxiaodou.android:system-permission-adapter-dwin:${latest-version}")
+```
+
+## 使用
+
+首先在 Application 里初始化：
+
+```kotlin
+class PermissionApplication : Application() {
+
+    companion object {
+        private const val TAG = "PermissionApplication"
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+
+        Log.d(TAG, "onCreate: currentProcessName: ${SystemPermissionCompat.currentProcessName()}")
+
+        // 1.首先必须根据厂商选择合适的实现，进行注入
+        SystemPermissionCompat.setDelegate(AospSystemPermission())			// AOSP
+        // SystemPermissionCompat.setDelegate(HikvisionSystemPermission()) 	// 海康威视
+        // SystemPermissionCompat.setDelegate(SignWaySystemPermission())	// 欣威视通
+        // SystemPermissionCompat.setDelegate(DWinSystemPermission()) 		// 迪文
+        
+        // 2.然后注入Context进行初始化
+        SystemPermissionCompat.setContext(this)
+    }
+}
+```
+
 ## 示例
 
 ### 获取以太网地址
@@ -115,4 +135,3 @@ val address = SystemPermissionCompat.getEthernetNetworkAddress()
 ```kotlin
 val reboot = SystemPermissionCompat.reboot()
 ```
-

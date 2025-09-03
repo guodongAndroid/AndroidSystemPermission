@@ -17,7 +17,7 @@ subprojects {
     plugins.withId("com.android.library") {
         apply(plugin = "com.vanniktech.maven.publish")
 
-        val version = "1.0.1-SNAPSHOT"
+        val version = "1.0.1"
 
         extensions.configure<LibraryAndroidComponentsExtension> {
             onVariants { variant ->
@@ -37,7 +37,7 @@ subprojects {
                 )
             )
 
-            publishToMavenCentral(false)
+            publishToMavenCentral(true)
             signAllPublications()
 
             val groupId = "com.sunxiaodou.android"
